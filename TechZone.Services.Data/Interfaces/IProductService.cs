@@ -1,4 +1,5 @@
 ﻿using TechZone.Web.ViewModels.Home;
+using TechZone.Web.ViewModels.Shop;
 
 namespace TechZone.Services.Data.Interfaces
 {
@@ -7,5 +8,6 @@ namespace TechZone.Services.Data.Interfaces
         
         Task<IEnumerable<ProductIndexViewModel>> GetLastProductsAsync(int count);
         Task<IEnumerable<ProductIndexViewModel>> GetProductsByCategoryAsync(string categoryName);
+        Task<AllProductsViewModel> GetFilteredProductsAsync(string category, ProductSearchQueryModel query);
     }
 }

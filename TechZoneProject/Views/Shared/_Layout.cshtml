@@ -10,22 +10,86 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TechZoneProject</a>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    Tech<span class="brand-accent">Zone</span>
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span style="color: white; font-size: 1.5rem;"><i class="fas fa-bars"></i></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+                        <li class="nav-item dropdown position-static">
+                            <a class="nav-link dropdown-toggle" asp-controller="Shop" asp-action="Index" id="hardwareDropdown" role="button" aria-expanded="false">
+                                Хардуер
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="hardwareDropdown">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="dropdown-header-custom">Основни Компоненти</span>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="cpu">Процесори</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="gpu">Видео карти</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="motherboard">Дънни платки</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="case">Кутии</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="dropdown-header-custom">Памет и Съхранение</span>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="ram">RAM Памет</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="ssd">SSD Дискове</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="hdd">Хард дискове</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="psu">Захранвания</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="https://gplay.bg/content/images/promo/promo_banner.jpg" class="menu-promo-img" alt="Promo Hardware">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
+
+                        <li class="nav-item dropdown position-static">
+                            <a class="nav-link dropdown-toggle" asp-controller="Shop" asp-action="Peripherals" id="periphDropdown" role="button" aria-expanded="false">
+                                Периферия
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="periphDropdown">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="dropdown-header-custom">Гейминг Гиър</span>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="mouse">Геймърски Мишки</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="keyboard">Клавиатури</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="headset">Слушалки</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="mousepad">Падове</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="dropdown-header-custom">Екрани и Стрийминг</span>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="monitor">Монитори</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="microphone">Микрофони</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="camera">Уеб камери</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="chair">Геймърски столове</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="https://gplay.bg/content/images/home_banners/periferiq-banner.jpg" class="menu-promo-img" alt="Promo Peripherals">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
                     </ul>
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>

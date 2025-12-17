@@ -1,0 +1,125 @@
+﻿@using TechZone.Web.ViewModels.Shop
+@model AllProductsViewModel
+
+@{
+    ViewData["Title"] = ViewData["CategoryName"];
+    var categoryId = ViewData["CategoryId"]?.ToString()?.ToLower();
+}
+
+<div class="shop-container">
+
+    <div class="section-title">
+        <h2>@ViewData["CategoryName"]</h2>
+        <span class="count-badge">(@Model.Products.Count() намерени)</span>
+    </div>
+
+    <form method="get" asp-controller="Shop" asp-action="Category" asp-route-id="@categoryId">
+
+        <div class="shop-layout">
+
+            <aside class="filters-sidebar">
+                <h3><i class="fas fa-filter"></i> Филтри</h3>
+                <div class="divider"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Търси модел</label>
+                    <input asp-for="SearchQuery.SearchTerm" class="tech-input" placeholder="..." />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Цена (лв.)</label>
+                    <div class="price-range">
+                        <input asp-for="SearchQuery.MinPrice" type="number" class="tech-input" placeholder="От" />
+                        <input asp-for="SearchQuery.MaxPrice" type="number" class="tech-input" placeholder="До" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Производител</label>
+                    <select asp-for="SearchQuery.Brand" class="tech-input tech-select">
+                        <option value="">-- Всички --</option>
+                        @foreach (var brand in Model.Brands)
+                        {
+                            <option value="@brand">@brand</option>
+                        }
+                    </select>
+                </div>
+
+                @if (categoryId == "ram" || categoryId == "gpu")
+                {
+                    <div class="divider"></div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            @(categoryId == "ram" ? "Памет (GB)" : "Видео памет (GB)")
+                        </label>
+                        <input asp-for="SearchQuery.MemorySize" type="number" class="tech-input" />
+                    </div>
+                }
+
+                <div class="divider"></div>
+
+                <button type="submit" class="btn-tech">
+                    Приложи
+                </button>
+
+                <a asp-controller="Shop" asp-action="Category" asp-route-id="@categoryId" class="btn-outline">
+                    Изчисти филтрите
+                </a>
+            </aside>
+
+            <main class="products-section">
+
+                <div class="sorting-bar">
+                    <label>Сортирай по:</label>
+                    <select asp-for="SearchQuery.Sorting" class="tech-select" onchange="this.form.submit()">
+                        <option value="0">Цена (Възходяща)</option>
+                        <option value="1">Цена (Низходяща)</option>
+                        <option value="2">Най-нови</option>
+                    </select>
+                </div>
+
+                <div class="tech-grid">
+                    @if (!Model.Products.Any())
+                    {
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+                            <h3 style="color: #666;">Няма намерени продукти.</h3>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var product in Model.Products)
+                        {
+                            // Тук вграждам HTML-а на картата директно,
+                            // за да съм сигурен, че ще ползва новите CSS класове,
+                            // а не стария Partial с Bootstrap.
+
+                            <div class="card">
+                                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                                <div class="card-body">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p style="color: #888; margin: 0;">@product.Brand</p>
+
+                                    <div class="price-tag">@product.Price.ToString("C")</div>
+
+                                    <div style="margin-top: 5px;">
+                                        @if (product.IsAvailable)
+                                        {
+                                            <span class="badge badge-success">Наличен</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">Изчерпан</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn-details">Виж детайли</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </main>
+        </div>
+    </form>
+</div>
