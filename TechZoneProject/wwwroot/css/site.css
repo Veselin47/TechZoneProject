@@ -1,0 +1,66 @@
+/* Тъмен фон за целия сайт */
+body {
+    background-color: #121212; /* Много тъмно сиво, почти черно */
+    color: #e0e0e0; /* Светъл текст */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Навигационна лента */
+.navbar {
+    background-color: #1f1f1f !important;
+    border-bottom: 2px solid #00ff88; /* Неоново зелена лента */
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+}
+
+/* Карти с продукти */
+.card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px); /* Леко повдигане при мишка отгоре */
+        box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2); /* Зелено сияние */
+        border-color: #00ff88;
+    }
+
+.card-title {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.card-body {
+    background-color: #1e1e1e;
+}
+
+.text-primary {
+    color: #00ff88 !important; /* Неоново зелено за цената */
+    font-weight: bold;
+}
+
+/* Бутони */
+.btn-primary {
+    background-color: #00ff88;
+    color: #000;
+    border: none;
+    font-weight: bold;
+}
+
+    .btn-primary:hover {
+        background-color: #00cc6a;
+        color: #000;
+    }
+
+.btn-outline-primary {
+    color: #00ff88;
+    border-color: #00ff88;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #00ff88;
+        color: #000;
+    }

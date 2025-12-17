@@ -1,0 +1,27 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TechZoneProject.Data.Models;
+
+namespace TechZoneProject.Data.Configurations
+{
+    public class WishlistItemConfiguration : IEntityTypeConfiguration<WishlistItem>
+    {
+        public void Configure(EntityTypeBuilder<WishlistItem> builder)
+        {
+            builder.ToTable("WishlistItems");
+
+            // Композитен ключ - един user може да хареса един продукт само веднъж
+            builder.HasKey(w => new { w.UserId, w.ProductId });
+
+            builder.HasOne(w => w.User)
+                .WithMany()
+                .HasForeignKey(w => w.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(w => w.Product)
+                .WithMany(p => p.WishlistItems)
+                .HasForeignKey(w => w.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+    }
+}

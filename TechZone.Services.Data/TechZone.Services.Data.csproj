@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechZone.Web.ViewModels\TechZone.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\TechZoneProject.Data.Models\TechZoneProject.Data.Models.csproj" />
+    <ProjectReference Include="..\TechZoneProject.Data\TechZoneProject.Data.csproj" />
+  </ItemGroup>
+
+</Project>
