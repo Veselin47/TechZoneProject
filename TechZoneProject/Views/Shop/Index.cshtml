@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Хардуер";
+}
+
+<div class="shop-container">
+    <div class="section-title">
+        <h2>Хардуер Категории</h2>
+    </div>
+
+    <div class="tech-grid category-grid">
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="cpu" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-microchip category-icon"></i>
+                <h4 class="category-title">Процесори</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="gpu" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-video category-icon"></i>
+                <h4 class="category-title">Видео Карти</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="ram" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-memory category-icon"></i>
+                <h4 class="category-title">RAM Памет</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="motherboard" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-server category-icon"></i>
+                <h4 class="category-title">Дънни Платки</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="storage" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-hdd category-icon"></i>
+                <h4 class="category-title">Дискове (SSD/HDD)</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="case" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-box category-icon"></i>
+                <h4 class="category-title">Кутии</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="psu" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-bolt category-icon"></i>
+                <h4 class="category-title">Захранвания</h4>
+            </div>
+        </a>
+    </div>
+</div>

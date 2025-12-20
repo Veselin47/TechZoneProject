@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TechZoneProject.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
@@ -46,8 +47,7 @@
                                         <div class="col-md-4">
                                             <span class="dropdown-header-custom">Памет и Съхранение</span>
                                             <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="ram">RAM Памет</a>
-                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="ssd">SSD Дискове</a>
-                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="hdd">Хард дискове</a>
+                                            <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="storage">Дискове (SSD / HDD)</a>
                                             <a class="dropdown-item-custom" asp-controller="Shop" asp-action="Category" asp-route-id="psu">Захранвания</a>
                                         </div>
                                         <div class="col-md-4">
@@ -101,11 +101,72 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-custom">
         <div class="container">
-            &copy; 2025 - TechZoneProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+
+                <div class="col-md-4 mb-4">
+                    <h3 class="footer-logo">Tech<span class="brand-accent">Zone</span></h3>
+                    <p class="footer-desc">
+                        Твоят най-верен партньор в гейминга.
+                        Предлагаме най-новия хардуер и периферия с гаранция за качество.
+                    </p>
+                    <div class="social-icons">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-2 mb-4">
+                    <h5 class="footer-heading">Магазин</h5>
+                    <ul class="footer-links">
+                        <li><a asp-controller="Shop" asp-action="Index">Хардуер</a></li>
+                        <li><a asp-controller="Shop" asp-action="Peripherals">Периферия</a></li>
+                        <li><a asp-controller="Shop" asp-action="Category" asp-route-id="cpu">Процесори</a></li>
+                        <li><a asp-controller="Shop" asp-action="Category" asp-route-id="gpu">Видео карти</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-heading">Клиенти</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Как да поръчам?</a></li>
+                        <li><a href="#">Доставка и плащане</a></li>
+                        <li><a href="#">Връщане и замяна</a></li>
+                        <li><a href="#">Лизинг</a></li>
+                        <li><a href="#">Общи условия</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-heading">Контакти</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> гр. София, ул. Техно 15</li>
+                        <li><i class="fas fa-phone"></i> 0888 123 456</li>
+                        <li><i class="fas fa-envelope"></i> support@techzone.bg</li>
+                        <li><i class="fas fa-clock"></i> Пон - Пет: 09:00 - 18:00</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6 text-md-start text-center">
+                        &copy; 2025 TechZone. Всички права запазени. - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                    <div class="col-md-6 text-md-end text-center">
+                        <i class="fab fa-cc-visa fa-2x mx-1"></i>
+                        <i class="fab fa-cc-mastercard fa-2x mx-1"></i>
+                        <i class="fab fa-cc-paypal fa-2x mx-1"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+            @*  *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

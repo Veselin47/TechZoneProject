@@ -23,24 +23,33 @@
 
                 <div class="form-group">
                     <label class="form-label">Търси модел</label>
-                    <input asp-for="SearchQuery.SearchTerm" class="tech-input" placeholder="..." />
+                    <input name="SearchTerm" value="@Model.SearchQuery.SearchTerm" class="tech-input" placeholder="..." />
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Цена (лв.)</label>
                     <div class="price-range">
-                        <input asp-for="SearchQuery.MinPrice" type="number" class="tech-input" placeholder="От" />
-                        <input asp-for="SearchQuery.MaxPrice" type="number" class="tech-input" placeholder="До" />
+                        <input name="MinPrice" value="@Model.SearchQuery.MinPrice" type="number" class="tech-input" placeholder="От" />
+
+                        <input name="MaxPrice" value="@Model.SearchQuery.MaxPrice" type="number" class="tech-input" placeholder="До" />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Производител</label>
-                    <select asp-for="SearchQuery.Brand" class="tech-input tech-select">
+                    <select name="Brand" class="tech-input tech-select">
                         <option value="">-- Всички --</option>
                         @foreach (var brand in Model.Brands)
                         {
-                            <option value="@brand">@brand</option>
+                           
+                            if (Model.SearchQuery.Brand == brand)
+                            {
+                                <option value="@brand" selected>@brand</option>
+                            }
+                            else
+                            {
+                                <option value="@brand">@brand</option>
+                            }
                         }
                     </select>
                 </div>
@@ -52,10 +61,42 @@
                         <label class="form-label">
                             @(categoryId == "ram" ? "Памет (GB)" : "Видео памет (GB)")
                         </label>
-                        <input asp-for="SearchQuery.MemorySize" type="number" class="tech-input" />
+                        <input name="MemorySize" value="@Model.SearchQuery.MemorySize" type="number" class="tech-input" />
                     </div>
                 }
+                @if (categoryId == "storage")
+                {
+                    <div class="divider"></div>
+                    <div class="form-group">
+                        <label class="form-label">Тип Диск</label>
+                        <select name="StorageType" class="tech-input tech-select">
+                            <option value="">-- Всички --</option>
 
+                            @if (Model.SearchQuery.StorageType == "SSD")
+                            {
+                                <option value="SSD" selected>SSD (Solid State)</option>
+                            }
+                            else
+                            {
+                                <option value="SSD">SSD (Solid State)</option>
+                            }
+
+                            @if (Model.SearchQuery.StorageType == "HDD")
+                            {
+                                <option value="HDD" selected>HDD (Hard Disk)</option>
+                            }
+                            else
+                            {
+                                <option value="HDD">HDD (Hard Disk)</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label class="form-label">Капацитет (GB)</label>
+                        <input name="MemorySize" value="@Model.SearchQuery.MemorySize" type="number" class="tech-input" />
+                    </div>
+                }
                 <div class="divider"></div>
 
                 <button type="submit" class="btn-tech">
@@ -71,37 +112,33 @@
 
                 <div class="sorting-bar">
                     <label>Сортирай по:</label>
-                    <select asp-for="SearchQuery.Sorting" class="tech-select" onchange="this.form.submit()">
-                        <option value="0">Цена (Възходяща)</option>
-                        <option value="1">Цена (Низходяща)</option>
-                        <option value="2">Най-нови</option>
+                    <select name="Sorting" class="tech-select" onchange="this.form.submit()">
+                        <!option value="0" @(Model.SearchQuery.Sorting == 0 ? "selected" : "")>Цена (Възходяща)</!option>
+                        <!option value="1" @(Model.SearchQuery.Sorting == 1 ? "selected" : "")>Цена (Низходяща)</!option>
+                        <!option value="2" @(Model.SearchQuery.Sorting == 2 ? "selected" : "")>Най-нови</!option>
                     </select>
                 </div>
 
                 <div class="tech-grid">
                     @if (!Model.Products.Any())
                     {
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 50px;">
-                            <h3 style="color: #666;">Няма намерени продукти.</h3>
+                        <div class="no-products-message">
+                            <h3>Няма намерени продукти.</h3>
                         </div>
                     }
                     else
                     {
                         @foreach (var product in Model.Products)
                         {
-                            // Тук вграждам HTML-а на картата директно,
-                            // за да съм сигурен, че ще ползва новите CSS класове,
-                            // а не стария Partial с Bootstrap.
-
                             <div class="card">
                                 <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
                                 <div class="card-body">
                                     <h5 class="card-title">@product.Name</h5>
-                                    <p style="color: #888; margin: 0;">@product.Brand</p>
+                                    <p class="card-brand">@product.Brand</p>
 
                                     <div class="price-tag">@product.Price.ToString("C")</div>
 
-                                    <div style="margin-top: 5px;">
+                                    <div class="stock-status">
                                         @if (product.IsAvailable)
                                         {
                                             <span class="badge badge-success">Наличен</span>

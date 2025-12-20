@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Периферия";
+}
+
+<div class="shop-container">
+    <div class="section-title">
+        <h2>Периферия и Аксесоари</h2>
+    </div>
+
+    <div class="tech-grid category-grid">
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="keyboard" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-keyboard category-icon"></i>
+                <h4 class="category-title">Клавиатури</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="mouse" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-mouse category-icon"></i>
+                <h4 class="category-title">Мишки</h4>
+            </div>
+        </a>
+
+        <a asp-controller="Shop" asp-action="Category" asp-route-id="monitor" class="card category-card">
+            <div class="card-body category-body">
+                <i class="fas fa-desktop category-icon"></i>
+                <h4 class="category-title">Монитори</h4>
+            </div>
+        </a>
+    </div>
+</div>

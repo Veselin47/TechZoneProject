@@ -96,6 +96,12 @@ namespace TechZone.Services.Data
                 case "monitor": productsQuery = this.dbContext.Displays; break;
                 case "keyboard": productsQuery = this.dbContext.Keyboards; break;
                 case "mouse": productsQuery = this.dbContext.Mice; break;
+                case "case": productsQuery = this.dbContext.Cases; break;
+                case "ssd":    // Оставяме ги за всеки случай, ако някой напише стария линк
+                case "hdd":
+                case "storage": productsQuery = this.dbContext.StorageDrives; break;
+                case "psu": productsQuery = this.dbContext.PowerSupplies; break;
+ 
                 default: break; // Ако е грешна категория, връща празен списък по-долу
             }
 
@@ -121,7 +127,16 @@ namespace TechZone.Services.Data
             {
                 productsQuery = productsQuery.Where(p => p.Price <= query.MaxPrice.Value);
             }
+            // НОВО: Филтър за Дискове
+            if (category.ToLower() == "storage" && !string.IsNullOrEmpty(query.StorageType))
+            {
+                // Тук допускам, че в StorageDrive имаш поле 'Type' (string или enum)
+                // Ако нямаш, ще трябва да филтрираш по името: .Where(x => x.Name.Contains("SSD"))
 
+                productsQuery = productsQuery
+                    .OfType<StorageDrive>()
+                    .Where(s => s.Type == query.StorageType);
+            }
             // 6. СОРТИРАНЕ
             productsQuery = query.Sorting switch
             {
@@ -145,24 +160,54 @@ namespace TechZone.Services.Data
                 })
                 .ToListAsync();
 
-            // 8. Взимаме СПИСЪК С МАРКИ (за да напълним филтъра)
-            // Важно: Правим го върху първоначалната категория, не върху филтрираните, 
-            // за да може потребителят да види всички възможни марки.
-            var brandsQuery = this.dbContext.Products.AsQueryable();
+            // 8. Взимаме СПИСЪК С МАРКИ (ОПРАВЕНО)
+            // Трябва да филтрираме марките точно както филтрираме продуктите!
 
-            // (Повтаряме суича набързо само за марките - може да се оптимизира, но за сега така е ясно)
+            IQueryable<Product> brandsQuery = this.dbContext.Products; // По подразбиране
+
             switch (category.ToLower())
             {
-                case "cpu": brandsQuery = this.dbContext.Cpus; break;
-                case "gpu": brandsQuery = this.dbContext.Gpus; break;
-                case "ram": brandsQuery = this.dbContext.Rams; break;
-                    // ... добави и другите ...
+                case "cpu":
+                    brandsQuery = this.dbContext.Cpus;
+                    break;
+                case "gpu":
+                    brandsQuery = this.dbContext.Gpus;
+                    break;
+                case "ram":
+                    brandsQuery = this.dbContext.Rams;
+                    break;
+                case "motherboard":
+                    brandsQuery = this.dbContext.Motherboards;
+                    break;
+                case "storage":
+                case "ssd":
+                case "hdd":
+                    brandsQuery = this.dbContext.StorageDrives;
+                    break;
+                case "case":
+                     brandsQuery = this.dbContext.Cases; 
+                    break;
+                case "psu":
+                     brandsQuery = this.dbContext.PowerSupplies; 
+                    break;
+                case "monitor":
+                case "display":
+                    brandsQuery = this.dbContext.Displays;
+                    break;
+                case "keyboard":
+                    brandsQuery = this.dbContext.Keyboards;
+                    break;
+                case "mouse":
+                    brandsQuery = this.dbContext.Mice;
+                    break;
+                    // Добави тук слушалки и други, когато ги създадеш
             }
 
             var brands = await brandsQuery
                 .Where(p => !p.IsDeleted)
                 .Select(p => p.Brand.Name)
-                .Distinct()
+                .Distinct() // Взимаме само уникалните имена
+                .OrderBy(b => b) // Подреждаме ги по азбучен ред
                 .ToListAsync();
 
             // 9. Сглобяваме всичко
@@ -171,7 +216,7 @@ namespace TechZone.Services.Data
                 CategoryName = category,
                 Products = products,
                 Brands = brands,
-                SearchQuery = query // Връщаме избора на потребителя обратно
+                SearchQuery = query 
             };
         }
     }
