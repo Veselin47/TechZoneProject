@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-dashboard-container">
+
+    <div class="dashboard-header">
+        <h1><i class="fas fa-user-shield"></i> Админ Панел</h1>
+        <p class="text-muted">Добре дошъл, Шефе! Управлявай TechZone от тук.</p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 col-lg-4">
+            <div class="dashboard-card card-create">
+                <div class="card-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Добави Продукт</h3>
+                    <p>Създай нов хардуер, периферия или компонент.</p>
+                </div>
+                <div class="card-action">
+                    <a asp-area="Admin" asp-controller="Product" asp-action="SelectType" class="btn-dashboard btn-create">
+                        <i class="fas fa-magic"></i> Създай
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="dashboard-card card-manage">
+                <div class="card-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Всички Продукти</h3>
+                    <p>Преглед, редакция на цени и изтриване на стока.</p>
+                </div>
+                <div class="card-action">
+                    <a href="#" class="btn-dashboard btn-manage">
+                        <i class="fas fa-tasks"></i> Управление
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="dashboard-card card-orders">
+                <div class="card-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Поръчки</h3>
+                    <p>Следи постъпилите поръчки от клиенти.</p>
+                </div>
+                <div class="card-action">
+                    <a href="#" class="btn-dashboard btn-orders">
+                        <i class="fas fa-truck"></i> Виж Поръчки
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

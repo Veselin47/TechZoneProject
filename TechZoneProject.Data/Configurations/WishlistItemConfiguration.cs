@@ -13,6 +13,7 @@ namespace TechZoneProject.Data.Configurations
             // Композитен ключ - един user може да хареса един продукт само веднъж
             builder.HasKey(w => new { w.UserId, w.ProductId });
 
+            builder.HasQueryFilter(w => !w.Product.IsDeleted);
             builder.HasOne(w => w.User)
                 .WithMany()
                 .HasForeignKey(w => w.UserId)

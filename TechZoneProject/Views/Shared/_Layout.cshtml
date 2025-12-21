@@ -87,7 +87,14 @@
                                 </div>
                             </div>
                         </li>
-
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link admin-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-user-shield"></i> ADMIN PANEL
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                     <partial name="_LoginPartial" />
@@ -166,7 +173,7 @@
             </div>
         </div>
     </footer>
-            @*  *@
+    @*  *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,8 +1,7 @@
 ﻿namespace TechZoneProject.Data.Models
 {
-    public class Order
+    public class Order : BaseEntity
     {
-        public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
 

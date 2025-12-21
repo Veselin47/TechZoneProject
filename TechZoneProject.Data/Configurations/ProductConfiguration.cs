@@ -22,7 +22,7 @@ namespace TechZoneProject.Data.Configurations
 
             // Soft Delete
             builder.Property(p => p.IsDeleted).HasDefaultValue(false);
-            //builder.HasQueryFilter(p => !p.IsDeleted);
+            builder.HasQueryFilter(p => !p.IsDeleted);
             builder.Property(p => p.StockQuantity)
            .IsRequired()
            .HasDefaultValue(0);

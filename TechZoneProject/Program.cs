@@ -10,7 +10,7 @@ namespace TechZoneProject
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,10 +28,12 @@ namespace TechZoneProject
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 3;
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            // Регистрираме нашия сървис
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IAdminProductService, AdminProductService>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -39,7 +41,7 @@ namespace TechZoneProject
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                // Подаваме services на нашия метод в Data слоя
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ services пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ Data пїЅпїЅпїЅпїЅ
                 DbSeeder.SeedData(services);
             }
             // Configure the HTTP request pipeline.
@@ -59,9 +61,23 @@ namespace TechZoneProject
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            // Маршрут за Админ панела
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    // Р’РёРєР°РјРµ РјРµС‚РѕРґР°, РєРѕР№С‚Рѕ РЅР°РїРёСЃР°С…РјРµ
+                    await AdminSeeder.SeedRolesAndAdminAsync(services);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Р“СЂРµС€РєР° РїСЂРё СЃРёР№РґРІР°РЅРµ: " + ex.Message);
+                }
+            }
+
             app.MapControllerRoute(
                 name: "Areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

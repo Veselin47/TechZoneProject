@@ -10,8 +10,11 @@ namespace TechZoneProject.Data.Configurations
         {
             builder.ToTable("CartItems");
 
+            builder.HasQueryFilter(w => !w.Product.IsDeleted);
+
+
             builder.HasOne(ci => ci.User)
-                .WithMany() // Не сме добавили колекция CartItems в User, за да е по-чисто
+                .WithMany() 
                 .HasForeignKey(ci => ci.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 

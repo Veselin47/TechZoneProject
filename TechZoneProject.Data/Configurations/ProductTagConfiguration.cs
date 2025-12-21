@@ -11,6 +11,8 @@ namespace TechZoneProject.Data.Configurations
             // Композитен ключ
             builder.HasKey(pt => new { pt.ProductId, pt.TagId });
 
+            builder.HasQueryFilter(pt => !pt.Product.IsDeleted);
+
             builder.HasOne(pt => pt.Product)
                 .WithMany(p => p.ProductTags)
                 .HasForeignKey(pt => pt.ProductId)
