@@ -1,0 +1,95 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.AddKeyboardViewModel
+
+@{
+    ViewData["Title"] = "Добави Клавиатура";
+}
+
+<div class="admin-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card admin-card">
+
+                <div class="card-header-custom">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-keyboard"></i> Добавяне на Клавиатура
+                    </h2>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+
+                        <partial name="_ProductCommonInputs" model="Model" />
+
+
+                        <h5 class="section-header text-success-custom">Технически характеристики</h5>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="SwitchType" class="form-label-custom"></label>
+                                <select asp-for="SwitchType" class="form-control-dark form-select-dark">
+                                    <option value="Mechanical (Red)">Механични - Red (Linear)</option>
+                                    <option value="Mechanical (Blue)">Механични - Blue (Clicky)</option>
+                                    <option value="Mechanical (Brown)">Механични - Brown (Tactile)</option>
+                                    <option value="Optical">Оптични</option>
+                                    <option value="Membrane">Мембранни</option>
+                                    <option value="Hybrid">Хибридни</option>
+                                </select>
+                                <span asp-validation-for="SwitchType" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ConnectionType" class="form-label-custom"></label>
+                                <select asp-for="ConnectionType" class="form-control-dark form-select-dark">
+                                    <option value="Wired (USB)">С кабел (USB)</option>
+                                    <option value="Wireless (2.4GHz)">Безжична (2.4GHz USB Dongle)</option>
+                                    <option value="Bluetooth">Bluetooth</option>
+                                    <option value="Tri-Mode">Tri-Mode (Кабел + 2.4G + BT)</option>
+                                </select>
+                                <span asp-validation-for="ConnectionType" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="SizePercentage" class="form-label-custom"></label>
+                                <select asp-for="SizePercentage" class="form-control-dark form-select-dark">
+                                    <option value="100% (Full Size)">100% - Пълноразмерна (с NumPad)</option>
+                                    <option value="80% (TKL)">80% - Tenkeyless (TKL)</option>
+                                    <option value="75%">75% - Компактна</option>
+                                    <option value="60%">60% - Мини</option>
+                                </select>
+                                <span asp-validation-for="SizePercentage" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Layout" class="form-label-custom"></label>
+                                <select asp-for="Layout" class="form-control-dark form-select-dark">
+                                    <option value="US (ANSI)">US (ANSI) - Малък Enter</option>
+                                    <option value="UK (ISO)">UK (ISO) - Голям Enter</option>
+                                    <option value="BG Phonetic">БДС / Фонетика</option>
+                                </select>
+                                <span asp-validation-for="Layout" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pt-2">
+                            <div class="form-check form-switch custom-switch">
+                                <input asp-for="HasRgb" class="form-check-input" type="checkbox" role="switch">
+                                <label class="form-check-label text-white ms-2" asp-for="HasRgb">
+                                    <i class="fas fa-lightbulb"></i> RGB Подсветка
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr class="divider border-secondary my-4" />
+
+                        <button type="submit" class="btn-admin-save w-100">
+                            <i class="fas fa-save"></i> ЗАПИШИ КЛАВИАТУРА
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

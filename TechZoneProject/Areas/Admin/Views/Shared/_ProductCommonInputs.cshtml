@@ -1,0 +1,69 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.ProductInputModel
+
+@* Това Partial View очаква модел, който наследява ProductInputModel *@
+
+<h5 class="section-header">Търговска информация</h5>
+
+<div class="row">
+    <div class="col-md-8 mb-3">
+        <label asp-for="Name" class="form-label-custom"></label>
+        <input asp-for="Name" class="form-control-dark" placeholder="Напр: Продукт модел X" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label asp-for="BrandId" class="form-label-custom">Производител</label>
+        <select asp-for="BrandId" class="form-control-dark form-select-dark">
+            <option value="">-- Избери Марка --</option>
+            @if (Model.Brands != null)
+            {
+                foreach (var brand in Model.Brands)
+                {
+                    <option value="@brand.Key">@brand.Value</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="BrandId" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label asp-for="Price" class="form-label-custom"></label>
+        <div class="input-group">
+            <input asp-for="Price" type="number" step="0.01" class="form-control-dark" />
+            <span class="input-group-text-dark">лв.</span>
+        </div>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label asp-for="StockQuantity" class="form-label-custom"></label>
+        <div class="input-group">
+            <input asp-for="StockQuantity" type="number" class="form-control-dark" />
+            <span class="input-group-text-dark">бр.</span>
+        </div>
+        <span asp-validation-for="StockQuantity" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label asp-for="WarrantyMonths" class="form-label-custom"></label>
+        <div class="input-group">
+            <input asp-for="WarrantyMonths" type="number" class="form-control-dark" />
+            <span class="input-group-text-dark">мес.</span>
+        </div>
+        <span asp-validation-for="WarrantyMonths" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="ImageUrl" class="form-label-custom"></label>
+    <input asp-for="ImageUrl" class="form-control-dark" placeholder="https://..." />
+    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+</div>
+
+<div class="mb-4">
+    <label asp-for="Description" class="form-label-custom"></label>
+    <textarea asp-for="Description" rows="3" class="form-control-dark"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>

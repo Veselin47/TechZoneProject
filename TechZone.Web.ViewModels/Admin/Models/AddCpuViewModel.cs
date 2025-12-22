@@ -34,12 +34,8 @@ namespace TechZone.Web.ViewModels.Admin.Models
         [Display(Name = "Кеш Памет (напр. 32MB L3)")]
         public string Cache { get; set; }
 
-        [Required]
-        [Range(1, 120)]
-        [Display(Name = "Гаранция (месеци)")]
-        public int WarrantyMonths { get; set; }
-
         [Display(Name = "Има ли охладител в кутията?")]
         public bool HasBoxCooler { get; set; }
+
     }
 }

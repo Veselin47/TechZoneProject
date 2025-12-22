@@ -32,6 +32,14 @@ namespace TechZone.Web.ViewModels.Admin.Models
         [Range(0, 10000)]
         [Display(Name = "Наличност (брой)")]
         public int StockQuantity { get; set; }
+
+        [Required(ErrorMessage = "Гаранцията е задължителна")]
+        [Range(1, 120, ErrorMessage = "Гаранцията трябва да е между 1 и 120 месеца")]
+        [Display(Name = "Гаранция (месеци)")]
+        public int WarrantyMonths { get; set; }
+
+        public IEnumerable<KeyValuePair<string, string>>? Brands { get; set; }
+
     }
 }
 

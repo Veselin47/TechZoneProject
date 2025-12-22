@@ -1,0 +1,96 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.AddStorageDriveViewModel
+
+@{
+    ViewData["Title"] = "Добави Диск";
+}
+
+<div class="admin-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card admin-card">
+
+                <div class="card-header-custom">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-hdd"></i> Добавяне на Диск (SSD/HDD)
+                    </h2>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+
+                        <partial name="_ProductCommonInputs" model="Model" />
+
+
+                        <h5 class="section-header text-success-custom">Технически характеристики</h5>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Type" class="form-label-custom"></label>
+                                <select asp-for="Type" class="form-control-dark form-select-dark">
+                                    <option value="NVMe SSD">NVMe SSD (M.2)</option>
+                                    <option value="SATA SSD">SATA SSD (Standard)</option>
+                                    <option value="HDD">HDD (Hard Drive)</option>
+                                    <option value="External SSD">Външен SSD</option>
+                                </select>
+                                <span asp-validation-for="Type" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="FormFactor" class="form-label-custom"></label>
+                                <select asp-for="FormFactor" class="form-control-dark form-select-dark">
+                                    <option value="M.2 2280">M.2 2280</option>
+                                    <option value="M.2 2230">M.2 2230 (Handhelds)</option>
+                                    <option value="2.5 inch">2.5 инча (SSD/Laptop HDD)</option>
+                                    <option value="3.5 inch">3.5 инча (Desktop HDD)</option>
+                                </select>
+                                <span asp-validation-for="FormFactor" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Interface" class="form-label-custom"></label>
+                                <input asp-for="Interface" class="form-control-dark" placeholder="Напр: PCIe 4.0 x4 или SATA III" />
+                                <span asp-validation-for="Interface" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="CapacityGb" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="CapacityGb" type="number" class="form-control-dark" />
+                                    <span class="input-group-text-dark">GB</span>
+                                </div>
+                                <span asp-validation-for="CapacityGb" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="ReadSpeedMb" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="ReadSpeedMb" type="number" class="form-control-dark" placeholder="7000" />
+                                    <span class="input-group-text-dark">MB/s</span>
+                                </div>
+                                <span asp-validation-for="ReadSpeedMb" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="WriteSpeedMb" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="WriteSpeedMb" type="number" class="form-control-dark" placeholder="6000" />
+                                    <span class="input-group-text-dark">MB/s</span>
+                                </div>
+                                <span asp-validation-for="WriteSpeedMb" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <hr class="divider border-secondary my-4" />
+
+                        <button type="submit" class="btn-admin-save w-100">
+                            <i class="fas fa-save"></i> ЗАПИШИ ДИСК
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.AddGpuViewModel
+
+@{
+    ViewData["Title"] = "Добави Видео Карта";
+    var brands = Model.Brands;
+}
+
+<div class="admin-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card admin-card">
+
+                <div class="card-header-custom">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-gamepad"></i> Добавяне на Видео Карта
+                    </h2>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+
+                        <partial name="_ProductCommonInputs" model="Model" />
+
+
+                        <h5 class="section-header text-success-custom">GPU Спецификации</h5>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="MemorySizeGb" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="MemorySizeGb" type="number" class="form-control-dark" />
+                                    <span class="input-group-text-dark">GB</span>
+                                </div>
+                                <span asp-validation-for="MemorySizeGb" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="MemoryType" class="form-label-custom"></label>
+                                <input asp-for="MemoryType" class="form-control-dark" placeholder="Напр: GDDR6X" />
+                                <span asp-validation-for="MemoryType" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="BusWidthBit" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="BusWidthBit" type="number" class="form-control-dark" />
+                                    <span class="input-group-text-dark">bit</span>
+                                </div>
+                                <span asp-validation-for="BusWidthBit" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CudaCores" class="form-label-custom"></label>
+                                <input asp-for="CudaCores" type="number" class="form-control-dark" placeholder="Напр: 5888" />
+                                <span asp-validation-for="CudaCores" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FrequencyMhz" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="FrequencyMhz" type="number" class="form-control-dark" />
+                                    <span class="input-group-text-dark">MHz</span>
+                                </div>
+                                <span asp-validation-for="FrequencyMhz" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Connectors" class="form-label-custom"></label>
+                            <input asp-for="Connectors" class="form-control-dark" placeholder="Напр: 1x HDMI 2.1, 3x DisplayPort 1.4a" />
+                            <span asp-validation-for="Connectors" class="text-danger"></span>
+                        </div>
+
+                        <hr class="divider border-secondary my-4" />
+
+                        <button type="submit" class="btn-admin-save w-100">
+                            <i class="fas fa-save"></i> ЗАПИШИ ВИДЕО КАРТА
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

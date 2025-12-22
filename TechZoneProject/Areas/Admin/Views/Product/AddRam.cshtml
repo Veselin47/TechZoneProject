@@ -1,0 +1,108 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.AddRamViewModel
+
+@{
+    ViewData["Title"] = "Добави RAM Памет";
+}
+
+<div class="admin-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card admin-card">
+
+                <div class="card-header-custom">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-memory"></i> Добавяне на RAM Памет
+                    </h2>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+
+                        <partial name="_ProductCommonInputs" model="Model" />
+
+
+                        <h5 class="section-header text-success-custom">Технически характеристики</h5>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Type" class="form-label-custom"></label>
+                                <select asp-for="Type" class="form-control-dark form-select-dark">
+                                    <option value="DDR5">DDR5</option>
+                                    <option value="DDR4">DDR4</option>
+                                    <option value="DDR3">DDR3</option>
+                                </select>
+                                <span asp-validation-for="Type" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="CapacityGb" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="CapacityGb" type="number" class="form-control-dark" />
+                                    <span class="input-group-text-dark">GB</span>
+                                </div>
+                                <span asp-validation-for="CapacityGb" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="SpeedMt" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="SpeedMt" type="number" class="form-control-dark" placeholder="Напр: 6000" />
+                                    <span class="input-group-text-dark">MT/s</span>
+                                </div>
+                                <span asp-validation-for="SpeedMt" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Timing" class="form-label-custom"></label>
+                                <input asp-for="Timing" class="form-control-dark" placeholder="Напр: CL36" />
+                                <span asp-validation-for="Timing" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Color" class="form-label-custom"></label>
+                                <input asp-for="Color" class="form-control-dark" placeholder="Напр: Черен, Бял" />
+                                <span asp-validation-for="Color" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 mb-4">
+                            <div class="col-md-4">
+                                <div class="form-check form-switch custom-switch">
+                                    <input asp-for="IsKit" class="form-check-input" type="checkbox" role="switch">
+                                    <label class="form-check-label text-white ms-2" asp-for="IsKit">
+                                        <i class="fas fa-box-open"></i> Dual Channel Kit
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check form-switch custom-switch">
+                                    <input asp-for="HasRgb" class="form-check-input" type="checkbox" role="switch">
+                                    <label class="form-check-label text-white ms-2" asp-for="HasRgb">
+                                        <i class="fas fa-lightbulb"></i> RGB Осветление
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check form-switch custom-switch">
+                                    <input asp-for="HasHeatsink" class="form-check-input" type="checkbox" role="switch" checked>
+                                    <label class="form-check-label text-white ms-2" asp-for="HasHeatsink">
+                                        <i class="fas fa-snowflake"></i> Охладител
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="divider border-secondary my-4" />
+
+                        <button type="submit" class="btn-admin-save w-100">
+                            <i class="fas fa-save"></i> ЗАПИШИ RAM ПАМЕТ
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

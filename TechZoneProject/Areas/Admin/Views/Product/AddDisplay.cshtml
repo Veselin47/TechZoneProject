@@ -1,0 +1,107 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.AddDisplayViewModel
+
+@{
+    ViewData["Title"] = "Добави Монитор";
+}
+
+<div class="admin-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card admin-card">
+
+                <div class="card-header-custom">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-desktop"></i> Добавяне на Монитор
+                    </h2>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+
+                        <partial name="_ProductCommonInputs" model="Model" />
+
+
+                        <h5 class="section-header text-success-custom">Технически характеристики</h5>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="ScreenSizeInch" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="ScreenSizeInch" type="number" step="0.1" class="form-control-dark" placeholder="27" />
+                                    <span class="input-group-text-dark">inch</span>
+                                </div>
+                                <span asp-validation-for="ScreenSizeInch" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Resolution" class="form-label-custom"></label>
+                                <select asp-for="Resolution" class="form-control-dark form-select-dark">
+                                    <option value="1920 x 1080">FHD (1920 x 1080)</option>
+                                    <option value="2560 x 1440">2K QHD (2560 x 1440)</option>
+                                    <option value="3440 x 1440">UWQHD (3440 x 1440)</option>
+                                    <option value="3840 x 2160">4K UHD (3840 x 2160)</option>
+                                    <option value="5120 x 1440">DQHD (5120 x 1440)</option>
+                                </select>
+                                <span asp-validation-for="Resolution" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="PanelType" class="form-label-custom"></label>
+                                <select asp-for="PanelType" class="form-control-dark form-select-dark">
+                                    <option value="IPS">IPS (Fast/Nano)</option>
+                                    <option value="VA">VA</option>
+                                    <option value="TN">TN</option>
+                                    <option value="OLED">OLED / QD-OLED</option>
+                                    <option value="Mini-LED">Mini-LED</option>
+                                </select>
+                                <span asp-validation-for="PanelType" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="RefreshRateHz" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="RefreshRateHz" type="number" class="form-control-dark" placeholder="144" />
+                                    <span class="input-group-text-dark">Hz</span>
+                                </div>
+                                <span asp-validation-for="RefreshRateHz" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="ResponseTimeMs" class="form-label-custom"></label>
+                                <div class="input-group">
+                                    <input asp-for="ResponseTimeMs" type="number" class="form-control-dark" placeholder="1" />
+                                    <span class="input-group-text-dark">ms</span>
+                                </div>
+                                <span asp-validation-for="ResponseTimeMs" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Ports" class="form-label-custom"></label>
+                                <input asp-for="Ports" class="form-control-dark" placeholder="Напр: 2x HDMI 2.1, 1x DP" />
+                                <span asp-validation-for="Ports" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pt-2">
+                            <div class="form-check form-switch custom-switch">
+                                <input asp-for="IsCurved" class="form-check-input" type="checkbox" role="switch">
+                                <label class="form-check-label text-white ms-2" asp-for="IsCurved">
+                                    <i class="fas fa-circle-notch"></i> Извит екран (Curved)
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr class="divider border-secondary my-4" />
+
+                        <button type="submit" class="btn-admin-save w-100">
+                            <i class="fas fa-save"></i> ЗАПИШИ МОНИТОР
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

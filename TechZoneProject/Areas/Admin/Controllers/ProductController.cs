@@ -23,55 +23,335 @@ namespace TechZoneProject.Areas.Admin.Controllers
         {
             return View();
         }
-        // ==========================================
-        // МЕТОДИ ЗА CPU (ПРОЦЕСОР)
-        // ==========================================
-
+    
         // GET: Отваря формата за попълване
         [HttpGet]
         public async Task<IActionResult> AddCpu()
         {
-            try
+            // 1. Създаваме модела и зареждаме марките вътре в него
+            var model = new AddCpuViewModel
             {
-                // Зареждаме марките (Intel, AMD) за падащото меню
-                ViewBag.Brands = await this.adminService.GetAllBrandsAsync();
+                Brands = await adminService.GetAllBrandsAsync()
+            };
 
-                return View();
-            }
-            catch (Exception ex)
-            {
-                // Ако нещо гръмме още при зареждането
-                return Content("Грешка при зареждане: " + ex.Message);
-            }
+            return View(model);
         }
 
-        // POST: Приема данните от бутона "Запиши"
         [HttpPost]
         public async Task<IActionResult> AddCpu(AddCpuViewModel model)
         {
-            // Проверка дали формата е попълнена правилно (валидациите)
+            // 1. Проверка за валидност (Required, Range и т.н.)
             if (!ModelState.IsValid)
             {
-                // Ако има грешка, презареждаме марките и връщаме формата с грешките
-                ViewBag.Brands = await this.adminService.GetAllBrandsAsync();
+                // ВАЖНО: Ако има грешка, Brands ще е null, затова ги зареждаме пак!
+                model.Brands = await adminService.GetAllBrandsAsync();
                 return View(model);
             }
 
             try
             {
-                // Извикваме логиката за запис в базата
-                await this.adminService.CreateCpuAsync(model);
+                // 2. Опит за запис
+                await adminService.CreateCpuAsync(model);
 
-                // УСПЕХ! Връщаме се на началното табло
-                return RedirectToAction("Index", "Home", new { area = "Admin" });
+                // 3. Успех -> Връщаме се в списъка с продукти в АДМИН зоната
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // ГРЕШКА ПРИ ЗАПИС
-                ModelState.AddModelError("", "Възникна неочаквана грешка: " + ex.Message);
+                // 4. Грешка -> Показваме съобщение на потребителя
+                ModelState.AddModelError("", "Възникна неочаквана грешка при запис. Моля опитайте отново.");
 
-                // Връщаме потребителя обратно във формата, за да не си загуби данните
-                ViewBag.Brands = await this.adminService.GetAllBrandsAsync();
+                // Зареждаме марките пак, иначе падащото меню ще изчезне
+                model.Brands = await adminService.GetAllBrandsAsync();
+
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddGpu()
+        {
+            var model = new AddGpuViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGpu(AddGpuViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateGpuAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddMotherboard()
+        {
+            var model = new AddMotherboardViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMotherboard(AddMotherboardViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateMotherboardAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddPowerSupply()
+        {
+            var model = new AddPowerSupplyViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPowerSupply(AddPowerSupplyViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreatePowerSupplyAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddRam()
+        {
+            var model = new AddRamViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRam(AddRamViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateRamAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddStorageDrive()
+        {
+            var model = new AddStorageDriveViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddStorageDrive(AddStorageDriveViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateStorageDriveAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddCase()
+        {
+            var model = new AddCaseViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCase(AddCaseViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateCaseAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddDisplay()
+        {
+            var model = new AddDisplayViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDisplay(AddDisplayViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateDisplayAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddKeyboard()
+        {
+            var model = new AddKeyboardViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddKeyboard(AddKeyboardViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateKeyboardAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddMouse()
+        {
+            var model = new AddMouseViewModel
+            {
+                Brands = await adminService.GetAllBrandsAsync()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMouse(AddMouseViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await adminService.GetAllBrandsAsync();
+                return View(model);
+            }
+
+            try
+            {
+                await adminService.CreateMouseAsync(model);
+                return RedirectToAction("SelectType", "Product", new { area = "Admin" });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Възникна грешка при добавянето на видео картата.");
+                model.Brands = await adminService.GetAllBrandsAsync();
                 return View(model);
             }
         }

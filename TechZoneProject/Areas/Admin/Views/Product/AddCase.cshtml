@@ -1,0 +1,99 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.AddCaseViewModel
+
+@{
+    ViewData["Title"] = "Добави Кутия";
+}
+
+<div class="admin-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card admin-card">
+
+                <div class="card-header-custom">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-box"></i> Добавяне на Кутия (Case)
+                    </h2>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+
+                        <partial name="_ProductCommonInputs" model="Model" />
+
+
+                        <h5 class="section-header text-success-custom">Технически характеристики</h5>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="FormFactor" class="form-label-custom"></label>
+                                <select asp-for="FormFactor" class="form-control-dark form-select-dark">
+                                    <option value="Mid Tower">Mid Tower (Стандартна)</option>
+                                    <option value="Full Tower">Full Tower (Голяма)</option>
+                                    <option value="Mini Tower">Mini Tower (mATX)</option>
+                                    <option value="Mini-ITX">Mini-ITX (Малка)</option>
+                                </select>
+                                <span asp-validation-for="FormFactor" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="SupportedFormats" class="form-label-custom"></label>
+                                <input asp-for="SupportedFormats" class="form-control-dark" placeholder="Напр: ATX, mATX, Mini-ITX" />
+                                <span asp-validation-for="SupportedFormats" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Color" class="form-label-custom"></label>
+                                <input asp-for="Color" class="form-control-dark" placeholder="Напр: Черен" />
+                                <span asp-validation-for="Color" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <label class="form-label-custom mt-2">Физичеки размери (mm)</label>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-text-dark">Д</span>
+                                    <input asp-for="LengthMm" type="number" class="form-control-dark" placeholder="Дължина" />
+                                    <span class="input-group-text-dark">mm</span>
+                                </div>
+                                <span asp-validation-for="LengthMm" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-text-dark">Ш</span>
+                                    <input asp-for="WidthMm" type="number" class="form-control-dark" placeholder="Ширина" />
+                                    <span class="input-group-text-dark">mm</span>
+                                </div>
+                                <span asp-validation-for="WidthMm" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-text-dark">В</span>
+                                    <input asp-for="HeightMm" type="number" class="form-control-dark" placeholder="Височина" />
+                                    <span class="input-group-text-dark">mm</span>
+                                </div>
+                                <span asp-validation-for="HeightMm" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pt-2">
+                            <div class="form-check form-switch custom-switch">
+                                <input asp-for="HasMeshFront" class="form-check-input" type="checkbox" role="switch">
+                                <label class="form-check-label text-white ms-2" asp-for="HasMeshFront">
+                                    <i class="fas fa-wind"></i> Мрежест преден панел (Mesh Flow)
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr class="divider border-secondary my-4" />
+
+                        <button type="submit" class="btn-admin-save w-100">
+                            <i class="fas fa-save"></i> ЗАПИШИ КУТИЯ
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

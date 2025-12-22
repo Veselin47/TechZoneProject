@@ -7,7 +7,7 @@
         public string FormFactor { get; set; } = null!;
         public string Chipset { get; set; } = null!;
         public int MemorySlots { get; set; }
-        public string MemoryType { get; set; } = null!; // DDR4/DDR5
+        public string MemoryType { get; set; } = null!; 
         public bool HasWifi { get; set; }
     }
 }
