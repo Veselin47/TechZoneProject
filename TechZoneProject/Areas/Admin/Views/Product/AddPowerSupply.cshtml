@@ -1,8 +1,8 @@
 ﻿@model TechZone.Web.ViewModels.Admin.Models.AddPowerSupplyViewModel
 
 @{
-    ViewData["Title"] = "Добави Захранване";
-    var brands = Model.Brands;
+    bool isEdit = ViewData["IsEdit"] == null ? false : (bool)ViewData["IsEdit"];
+    ViewData["Title"] = isEdit ? "Редактиране на PSU" : "Добави PSU";
 }
 
 <div class="admin-container">
@@ -12,7 +12,7 @@
 
                 <div class="card-header-custom">
                     <h2 class="text-center mb-0">
-                        <i class="fas fa-plug"></i> Добавяне на Захранване (PSU)
+                        <i class="fas fa-plug"></i> @(isEdit ? "Редактиране на Захранване" : "Добавяне на Захранване")
                     </h2>
                 </div>
 

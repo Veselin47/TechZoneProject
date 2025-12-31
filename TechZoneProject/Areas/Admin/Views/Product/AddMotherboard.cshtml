@@ -1,8 +1,8 @@
 ﻿@model TechZone.Web.ViewModels.Admin.Models.AddMotherboardViewModel
 
 @{
-    ViewData["Title"] = "Добави Дънна Платка";
-    var brands = Model.Brands;
+    bool isEdit = ViewData["IsEdit"] == null ? false : (bool)ViewData["IsEdit"];
+    ViewData["Title"] = isEdit ? "Редактиране на Дъно" : "Добави Дъно";
 }
 
 <div class="admin-container">
@@ -12,7 +12,7 @@
 
                 <div class="card-header-custom">
                     <h2 class="text-center mb-0">
-                        <i class="fas fa-server"></i> Добавяне на Дънна Платка
+                        <i class="fas fa-server"></i> @(isEdit ? "Редактиране на Дънна платка" : "Добавяне на Дънна платка")
                     </h2>
                 </div>
 

@@ -1,7 +1,8 @@
 ﻿@model TechZone.Web.ViewModels.Admin.Models.AddCpuViewModel
 
 @{
-    ViewData["Title"] = "Добави Процесор";
+    bool isEdit = ViewData["IsEdit"] == null ? false : (bool)ViewData["IsEdit"];
+    ViewData["Title"] = isEdit ? "Редактиране на Процесор" : "Добави Процесор";
 }
 
 <div class="admin-container">
@@ -9,7 +10,9 @@
         <div class="col-lg-10">
             <div class="card admin-card">
                 <div class="card-header-custom">
-                    <h2 class="text-center mb-0"><i class="fas fa-microchip"></i> Добавяне на Процесор</h2>
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-microchip"></i> @(isEdit ? "Редактиране на Процесор" : "Добавяне на Процесор")
+                    </h2>
                 </div>
 
                 <div class="card-body p-4">

@@ -1,8 +1,8 @@
 ﻿@model TechZone.Web.ViewModels.Admin.Models.AddGpuViewModel
 
 @{
-    ViewData["Title"] = "Добави Видео Карта";
-    var brands = Model.Brands;
+    bool isEdit = ViewData["IsEdit"] == null ? false : (bool)ViewData["IsEdit"];
+    ViewData["Title"] = isEdit ? "Редактиране на Видео Карта" : "Добави Видео Карта";
 }
 
 <div class="admin-container">
@@ -12,7 +12,7 @@
 
                 <div class="card-header-custom">
                     <h2 class="text-center mb-0">
-                        <i class="fas fa-gamepad"></i> Добавяне на Видео Карта
+                        <i class="fas fa-gamepad"></i> @(isEdit ? "Редактиране на Видео Карта" : "Добавяне на Видео Карта")
                     </h2>
                 </div>
 

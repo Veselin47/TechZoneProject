@@ -4,6 +4,8 @@ namespace TechZone.Web.ViewModels.Admin.Models
 {
     public class ProductInputModel
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(100)]
         [Display(Name = "Име на продукта")]

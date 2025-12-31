@@ -1,7 +1,8 @@
 ﻿@model TechZone.Web.ViewModels.Admin.Models.AddRamViewModel
 
 @{
-    ViewData["Title"] = "Добави RAM Памет";
+    bool isEdit = ViewData["IsEdit"] == null ? false : (bool)ViewData["IsEdit"];
+    ViewData["Title"] = isEdit ? "Редактиране на RAM" : "Добави RAM";
 }
 
 <div class="admin-container">
@@ -11,7 +12,7 @@
 
                 <div class="card-header-custom">
                     <h2 class="text-center mb-0">
-                        <i class="fas fa-memory"></i> Добавяне на RAM Памет
+                        <i class="fas fa-memory"></i> @(isEdit ? "Редактиране на RAM Памет" : "Добавяне на RAM Памет")
                     </h2>
                 </div>
 

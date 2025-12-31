@@ -1,7 +1,8 @@
 ﻿@model TechZone.Web.ViewModels.Admin.Models.AddDisplayViewModel
 
 @{
-    ViewData["Title"] = "Добави Монитор";
+    bool isEdit = ViewData["IsEdit"] == null ? false : (bool)ViewData["IsEdit"];
+    ViewData["Title"] = isEdit ? "Редактиране на Монитор" : "Добави Монитор";
 }
 
 <div class="admin-container">
@@ -11,7 +12,7 @@
 
                 <div class="card-header-custom">
                     <h2 class="text-center mb-0">
-                        <i class="fas fa-desktop"></i> Добавяне на Монитор
+                        <i class="fas fa-desktop"></i> @(isEdit ? "Редактиране на Монитор" : "Добавяне на Монитор")
                     </h2>
                 </div>
 
