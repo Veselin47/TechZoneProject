@@ -1016,7 +1016,64 @@ h2, h3, h4, h5 {
 }
 
     .select-card-disabled:hover {
-        /* Без ефект при ховър */
+       
         transform: none;
         box-shadow: none;
+    }
+
+
+/* --- Badges за навигацията --- */
+.badge-notification {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    background-color: #dc3545; /* Червено */
+    color: white;
+    border-radius: 50%;
+    padding: 0.25em 0.5em;
+    font-size: 0.75rem;
+    font-weight: bold;
+    min-width: 18px;
+    text-align: center;
+    border: 1px solid #1a1a1a; /* Тъмен бордър за контраст */
+}
+
+/* --- Action Buttons (Върху картата на продукта) --- */
+.card-actions {
+    display: flex;
+    justify-content: space-between; /* Детайли вляво, икони вдясно */
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #333;
+    margin-top: auto; /* Залепва ги за дъното на картата */
+}
+
+.btn-icon-action {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 1px solid #444;
+    background: transparent;
+    color: #ccc;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+    .btn-icon-action:hover {
+        transform: scale(1.1);
+        color: white;
+    }
+
+    .btn-icon-action.add-cart:hover {
+        background-color: #28a745; /* Зелено за количка */
+        border-color: #28a745;
+    }
+
+    .btn-icon-action.add-wish:hover {
+        background-color: #dc3545; /* Червено за сърце */
+        border-color: #dc3545;
     }

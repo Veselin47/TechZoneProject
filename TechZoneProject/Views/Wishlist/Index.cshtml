@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TechZone.Web.ViewModels.Admin.Models.ProductAllViewModel>
+
+@{
+    ViewData["Title"] = "Любими продукти";
+}
+
+<div class="shop-container">
+    <div class="section-title">
+        <h2><i class="fas fa-heart text-danger"></i> Любими продукти</h2>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center mt-5">
+            <h4>Нямате добавени любими продукти.</h4>
+            <a asp-controller="Shop" asp-action="Index" class="btn-tech mt-3">Разгледай магазина</a>
+        </div>
+    }
+    else
+    {
+        <div class="tech-grid">
+            @foreach (var product in Model)
+            {
+                <div class="card">
+                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-brand">@product.Brand</p>
+                        <div class="price-tag">@product.Price.ToString("C")</div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a asp-controller="Wishlist" asp-action="Remove" asp-route-productId="@product.Id" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash"></i> Премахни
+                        </a>
+
+                        @if (product.IsAvailable)
+                        {
+                            <a asp-controller="Cart" asp-action="Add" asp-route-productId="@product.Id" class="btn btn-sm btn-success">
+                                <i class="fas fa-shopping-cart"></i> Купи
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

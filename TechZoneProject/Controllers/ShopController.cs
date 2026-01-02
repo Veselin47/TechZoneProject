@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TechZone.Services.Data.Interfaces;
-using TechZone.Web.ViewModels.Shop; // <--- ВАЖНО: Добави това за новите модели
+using TechZone.Web.ViewModels.Shop; 
 
 namespace TechZone.Web.Controllers
 {

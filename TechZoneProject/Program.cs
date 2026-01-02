@@ -34,6 +34,8 @@ namespace TechZoneProject
             // ������������ ����� ������
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IAdminProductService, AdminProductService>();
+            builder.Services.AddScoped<ICartService, CartService>();
+            builder.Services.AddScoped<IWishlistService, WishlistService>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

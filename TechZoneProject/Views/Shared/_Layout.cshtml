@@ -1,4 +1,30 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using TechZoneProject.Data.Models
+@using TechZone.Services.Data.Interfaces
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject ICartService CartService
+@inject IWishlistService WishlistService
+
+@{
+    // 1. ЛОГИКА ЗА БРОЯЧИТЕ (Слагаме я тук, най-горе)
+    int cartCount = 0;
+    int wishlistCount = 0;
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var userId = UserManager.GetUserId(User);
+
+        // Взимаме бройките
+        var cartItems = await CartService.GetCartItemsAsync(userId);
+        cartCount = cartItems.Sum(x => x.Quantity);
+
+        var wishlistItems = await WishlistService.GetUserWishlistAsync(userId);
+        wishlistCount = wishlistItems.Count();
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -92,6 +118,27 @@
                             <li class="nav-item">
                                 <a class="nav-link admin-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
                                     <i class="fas fa-user-shield"></i> ADMIN PANEL
+                                </a>
+                            </li>
+                        }
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item me-3 ms-lg-auto">
+                                <a class="nav-link position-relative" asp-controller="Wishlist" asp-action="Index" title="Любими">
+                                    <i class="fas fa-heart fa-lg"></i>
+                                    @if (wishlistCount > 0)
+                                    {
+                                        <span class="badge-notification">@wishlistCount</span>
+                                    }
+                                </a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="nav-link position-relative" asp-controller="Cart" asp-action="Index" title="Количка">
+                                    <i class="fas fa-shopping-cart fa-lg"></i>
+                                    @if (cartCount > 0)
+                                    {
+                                        <span class="badge-notification">@cartCount</span>
+                                    }
                                 </a>
                             </li>
                         }

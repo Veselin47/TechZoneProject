@@ -149,8 +149,35 @@
                                         }
                                     </div>
                                 </div>
-                                <div class="card-footer">
-                                    <a href="#" class="btn-details">Виж детайли</a>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <a asp-controller="Shop" asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-outline-light">
+                                        <i class="fas fa-info-circle"></i> Детайли
+                                    </a>
+
+                                    <div class="btn-group">
+                                        <a asp-controller="Wishlist" asp-action="Add"
+                                           asp-route-productId="@product.Id"
+                                           asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString"
+                                           class="btn btn-sm btn-outline-danger" title="Добави в любими">
+                                            <i class="far fa-heart"></i>
+                                        </a>
+
+                                        @if (product.IsAvailable)
+                                        {
+                                            <a asp-controller="Cart" asp-action="Add"
+                                               asp-route-productId="@product.Id"
+                                               asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString"
+                                               class="btn btn-sm btn-success" title="Купи">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-sm btn-secondary" disabled>
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         }

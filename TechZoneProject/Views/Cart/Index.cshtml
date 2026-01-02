@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TechZone.Web.ViewModels.Shop.CartViewModel>
+
+@{
+    ViewData["Title"] = "Моята количка";
+    decimal grandTotal = Model.Sum(x => x.TotalPrice);
+}
+
+<div class="shop-container">
+    <div class="section-title">
+        <h2><i class="fas fa-shopping-cart"></i> Твоята Количка</h2>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            Количката ви е празна. <a asp-controller="Shop" asp-action="Index" class="alert-link">Към магазина</a>.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Продукт</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Общо</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="@item.ImageUrl" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px; border-radius: 5px;" />
+                                    <span class="fw-bold">@item.ProductName</span>
+                                </div>
+                            </td>
+                            <td>@item.Price.ToString("C")</td>
+                            <td>
+                                <span class="badge bg-secondary">@item.Quantity бр.</span>
+                            </td>
+                            <td class="fw-bold text-success">@item.TotalPrice.ToString("C")</td>
+                            <td>
+                                <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6 offset-md-6">
+                <div class="card bg-dark border-secondary">
+                    <div class="card-body">
+                        <h4 class="d-flex justify-content-between">
+                            <span>Обща сума:</span>
+                            <span class="text-success">@grandTotal.ToString("C")</span>
+                        </h4>
+                        <hr class="border-secondary" />
+                        <a href="#" class="btn btn-success w-100 btn-lg">
+                            <i class="fas fa-credit-card"></i> Поръчай
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

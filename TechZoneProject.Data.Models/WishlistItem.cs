@@ -1,6 +1,6 @@
 ﻿namespace TechZoneProject.Data.Models
 {
-    public class WishlistItem 
+    public class WishlistItem : BaseEntity
     {
         public string UserId { get; set; } = null!;
         public ApplicationUser User { get; set; } = null!;
