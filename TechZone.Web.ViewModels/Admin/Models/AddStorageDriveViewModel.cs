@@ -10,15 +10,15 @@ namespace TechZone.Web.ViewModels.Admin.Models
     {
         [Required(ErrorMessage = "Типът е задължителен")]
         [Display(Name = "Тип устройство")]
-        public string Type { get; set; } = null!; // NVMe SSD, SATA SSD, HDD
+        public string Type { get; set; } = null!; 
 
         [Required(ErrorMessage = "Интерфейсът е задължителен")]
         [Display(Name = "Интерфейс")]
-        public string Interface { get; set; } = null!; // PCIe 4.0 x4, SATA III
+        public string Interface { get; set; } = null!; 
 
         [Required(ErrorMessage = "Форм-факторът е задължителен")]
         [Display(Name = "Форм-фактор")]
-        public string FormFactor { get; set; } = null!; // M.2 2280, 2.5 inch, 3.5 inch
+        public string FormFactor { get; set; } = null!; 
 
         [Required(ErrorMessage = "Капацитетът е задължителен")]
         [Range(120, 20000, ErrorMessage = "Капацитетът трябва да е между 120GB и 20TB")]

@@ -11,11 +11,11 @@ namespace TechZone.Web.ViewModels.Admin.Models
     {
         [Required(ErrorMessage = "Форм-факторът е задължителен")]
         [Display(Name = "Тип кутия (Size)")]
-        public string FormFactor { get; set; } = null!; // Mid Tower, Full Tower
+        public string FormFactor { get; set; } = null!; 
 
         [Required(ErrorMessage = "Поддържаните формати са задължителни")]
         [Display(Name = "Поддържани дънни платки")]
-        public string SupportedFormats { get; set; } = null!; // ATX, mATX, Mini-ITX
+        public string SupportedFormats { get; set; } = null!; 
 
         [Required(ErrorMessage = "Цветът е задължителен")]
         [Display(Name = "Цвят")]

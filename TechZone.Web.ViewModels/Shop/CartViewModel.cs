@@ -8,9 +8,9 @@ namespace TechZone.Web.ViewModels.Shop
 {
     public class CartViewModel
     {
-        public int Id { get; set; } // ID на записа в количката (за триене)
+        public int Id { get; set; } 
 
-        public int ProductId { get; set; } // ID на продукта (за линк към детайли)
+        public int ProductId { get; set; }
 
         public string ProductName { get; set; } = null!;
 
@@ -20,6 +20,6 @@ namespace TechZone.Web.ViewModels.Shop
 
         public int Quantity { get; set; }
 
-        public decimal TotalPrice { get; set; } // Цена * Количество
+        public decimal TotalPrice { get; set; } 
     }
 }

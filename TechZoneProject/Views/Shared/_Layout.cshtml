@@ -7,37 +7,32 @@
 @inject IWishlistService WishlistService
 
 @{
-    // 1. ЛОГИКА ЗА БРОЯЧИТЕ (Слагаме я тук, най-горе)
     int cartCount = 0;
     int wishlistCount = 0;
 
     if (SignInManager.IsSignedIn(User))
     {
         var userId = UserManager.GetUserId(User);
-
-        // Взимаме бройките
         var cartItems = await CartService.GetCartItemsAsync(userId);
         cartCount = cartItems.Sum(x => x.Quantity);
-
         var wishlistItems = await WishlistService.GetUserWishlistAsync(userId);
         wishlistCount = wishlistItems.Count();
     }
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TechZoneProject</title>
+    <title>@ViewData["Title"] - TechZone</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TechZoneProject.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-custom">
+        <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     Tech<span class="brand-accent">Zone</span>
@@ -48,18 +43,16 @@
                     <span style="color: white; font-size: 1.5rem;"><i class="fas fa-bars"></i></span>
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 main-nav-items">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Начало</a>
                         </li>
 
                         <li class="nav-item dropdown position-static">
                             <a class="nav-link dropdown-toggle" asp-controller="Shop" asp-action="Index" id="hardwareDropdown" role="button" aria-expanded="false">
                                 Хардуер
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="hardwareDropdown">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -88,7 +81,6 @@
                             <a class="nav-link dropdown-toggle" asp-controller="Shop" asp-action="Peripherals" id="periphDropdown" role="button" aria-expanded="false">
                                 Периферия
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="periphDropdown">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -113,18 +105,26 @@
                                 </div>
                             </div>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Contacts">Контакти</a>
+                        </li>
+
                         @if (User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link admin-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                                    <i class="fas fa-user-shield"></i> ADMIN PANEL
+                                    ADMIN
                                 </a>
                             </li>
                         }
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto align-items-center user-actions">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item me-3 ms-lg-auto">
-                                <a class="nav-link position-relative" asp-controller="Wishlist" asp-action="Index" title="Любими">
+                            <li class="nav-item">
+                                <a class="nav-link position-relative icon-link" asp-controller="Wishlist" asp-action="Index" title="Любими">
                                     <i class="fas fa-heart fa-lg"></i>
                                     @if (wishlistCount > 0)
                                     {
@@ -132,8 +132,8 @@
                                     }
                                 </a>
                             </li>
-                            <li class="nav-item me-3">
-                                <a class="nav-link position-relative" asp-controller="Cart" asp-action="Index" title="Количка">
+                            <li class="nav-item">
+                                <a class="nav-link position-relative icon-link" asp-controller="Cart" asp-action="Index" title="Количка">
                                     <i class="fas fa-shopping-cart fa-lg"></i>
                                     @if (cartCount > 0)
                                     {
@@ -142,14 +142,14 @@
                                 </a>
                             </li>
                         }
+                        <partial name="_LoginPartial" />
                     </ul>
-
-                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container main-content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -158,13 +158,9 @@
     <footer class="footer-custom">
         <div class="container">
             <div class="row">
-
                 <div class="col-md-4 mb-4">
                     <h3 class="footer-logo">Tech<span class="brand-accent">Zone</span></h3>
-                    <p class="footer-desc">
-                        Твоят най-верен партньор в гейминга.
-                        Предлагаме най-новия хардуер и периферия с гаранция за качество.
-                    </p>
+                    <p class="footer-desc">Твоят най-верен партньор в гейминга. Предлагаме най-новия хардуер и периферия с гаранция за качество.</p>
                     <div class="social-icons">
                         <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -172,55 +168,46 @@
                         <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-
                 <div class="col-md-2 mb-4">
                     <h5 class="footer-heading">Магазин</h5>
                     <ul class="footer-links">
                         <li><a asp-controller="Shop" asp-action="Index">Хардуер</a></li>
                         <li><a asp-controller="Shop" asp-action="Peripherals">Периферия</a></li>
                         <li><a asp-controller="Shop" asp-action="Category" asp-route-id="cpu">Процесори</a></li>
-                        <li><a asp-controller="Shop" asp-action="Category" asp-route-id="gpu">Видео карти</a></li>
                     </ul>
                 </div>
-
                 <div class="col-md-3 mb-4">
                     <h5 class="footer-heading">Клиенти</h5>
                     <ul class="footer-links">
                         <li><a href="#">Как да поръчам?</a></li>
-                        <li><a href="#">Доставка и плащане</a></li>
-                        <li><a href="#">Връщане и замяна</a></li>
-                        <li><a href="#">Лизинг</a></li>
-                        <li><a href="#">Общи условия</a></li>
+                        <li><a href="#">Доставка</a></li>
+                        <li><a href="#">Връщане</a></li>
+                        <li><a href="#">Условия</a></li>
                     </ul>
                 </div>
-
                 <div class="col-md-3 mb-4">
                     <h5 class="footer-heading">Контакти</h5>
                     <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i> гр. София, ул. Техно 15</li>
+                        <li><i class="fas fa-map-marker-alt"></i> София, Студентски град</li>
                         <li><i class="fas fa-phone"></i> 0888 123 456</li>
-                        <li><i class="fas fa-envelope"></i> support@techzone.bg</li>
-                        <li><i class="fas fa-clock"></i> Пон - Пет: 09:00 - 18:00</li>
+                        <li><i class="fas fa-envelope"></i> info@techzone.bg</li>
                     </ul>
                 </div>
-
             </div>
-
             <div class="footer-bottom">
                 <div class="row">
-                    <div class="col-md-6 text-md-start text-center">
-                        &copy; 2025 TechZone. Всички права запазени. - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    <div class="col-md-6 text-center text-md-start">
+                        &copy; 2025 TechZone. Всички права запазени.
                     </div>
-                    <div class="col-md-6 text-md-end text-center">
-                        <i class="fab fa-cc-visa fa-2x mx-1"></i>
-                        <i class="fab fa-cc-mastercard fa-2x mx-1"></i>
-                        <i class="fab fa-cc-paypal fa-2x mx-1"></i>
+                    <div class="col-md-6 text-center text-md-end">
+                        <i class="fab fa-cc-visa fa-lg mx-1"></i>
+                        <i class="fab fa-cc-mastercard fa-lg mx-1"></i>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-    @*  *@
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

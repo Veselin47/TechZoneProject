@@ -16,11 +16,11 @@ namespace TechZone.Web.ViewModels.Admin.Models
 
         [Required(ErrorMessage = "Типът сензор е задължителен")]
         [Display(Name = "Тип сензор")]
-        public string SensorType { get; set; } = null!; // Optical, Laser
+        public string SensorType { get; set; } = null!; 
 
         [Required(ErrorMessage = "Типът на свързване е задължителен")]
         [Display(Name = "Свързване")]
-        public string ConnectionType { get; set; } = null!; // USB, Wireless
+        public string ConnectionType { get; set; } = null!; 
 
         [Required(ErrorMessage = "Броят бутони е задължителен")]
         [Range(2, 20, ErrorMessage = "Бутоните обикновено са между 2 и 20")]

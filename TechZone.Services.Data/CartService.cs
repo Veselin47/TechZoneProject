@@ -27,7 +27,7 @@ namespace TechZone.Services.Data
 
             if (cartItem != null)
             {
-                cartItem.Quantity++; // Вече го има, увеличаваме бройката
+                cartItem.Quantity++; 
             }
             else
             {
@@ -57,7 +57,7 @@ namespace TechZone.Services.Data
         {
             return await context.CartItems
                 .Where(c => c.UserId == userId)
-                .Include(c => c.Product) // Важно! Взимаме данните за продукта
+                .Include(c => c.Product) 
                 .Select(c => new CartViewModel
                 {
                     Id = c.Id,

@@ -16,11 +16,9 @@ namespace TechZoneProject.Data.Seeding
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            // 1. Създаване на Роли
             await SeedRoleAsync(roleManager, "Administrator");
             await SeedRoleAsync(roleManager, "User");
 
-            // 2. Създаване на АДМИН ПОТРЕБИТЕЛ
             var adminEmail = "admin@techzone.bg";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
@@ -35,7 +33,6 @@ namespace TechZoneProject.Data.Seeding
                     EmailConfirmed = true
                 };
 
-                // Паролата трябва да е силна!
                 var result = await userManager.CreateAsync(adminUser, "Admin123!");
 
                 if (result.Succeeded)

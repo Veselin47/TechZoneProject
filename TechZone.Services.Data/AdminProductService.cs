@@ -28,9 +28,7 @@ namespace TechZone.Services.Data
             product.BrandId = model.BrandId;
             product.StockQuantity = model.StockQuantity;
 
-            // Тези се попълват автоматично от BaseEntity конструктора:
-            // product.IsDeleted = false;
-            // product.CreatedOn = DateTime.UtcNow;
+           
         }
         public async Task<IEnumerable<KeyValuePair<string, string>>> GetAllBrandsAsync()
         {
@@ -44,11 +42,9 @@ namespace TechZone.Services.Data
 
         private void MapCpuData(Cpu cpu, AddCpuViewModel model)
         {
-            // Общите неща (използваме помощника, който вече имаш или го добавяме тук)
-            // Ако нямаш MapBaseProductInfo, просто ги напиши тук:
+           
             MapBaseProductInfo(cpu, model);
 
-            // Специфичните за CPU
             cpu.Socket = model.Socket;
             cpu.Series = model.Series;
             cpu.PhysicalCores = model.PhysicalCores;
@@ -63,7 +59,6 @@ namespace TechZone.Services.Data
         {
             var cpu = new Cpu();
 
-            // ЕДИН РЕД върши всичко!
             MapCpuData(cpu, model);
 
             await this.dbContext.Cpus.AddAsync(cpu);
@@ -75,10 +70,8 @@ namespace TechZone.Services.Data
             var cpu = await this.dbContext.Cpus.FindAsync(id);
             if (cpu == null) throw new ArgumentException("Invalid ID");
 
-            // СЪЩИЯТ РЕД върши всичко и тук!
             MapCpuData(cpu, model);
 
-            // Няма AddAsync, само Save, защото EF Core следи промените
             await this.dbContext.SaveChangesAsync();
         }
 
@@ -119,10 +112,8 @@ namespace TechZone.Services.Data
 
         private void MapGpuData(Gpu gpu, AddGpuViewModel model)
         {
-            // Попълва общите неща (Име, Цена, Марка, Гаранция...)
             MapBaseProductInfo(gpu, model);
 
-            // Попълва специфичните за GPU
             gpu.MemorySizeGb = model.MemorySizeGb;
             gpu.MemoryType = model.MemoryType;
             gpu.CudaCores = model.CudaCores;
@@ -131,31 +122,26 @@ namespace TechZone.Services.Data
             gpu.Connectors = model.Connectors;
         }
 
-        // 2. Създаване (CREATE)
         public async Task CreateGpuAsync(AddGpuViewModel model)
         {
             var gpu = new Gpu();
 
-            // Използваме помощния метод
             MapGpuData(gpu, model);
 
             await this.dbContext.Gpus.AddAsync(gpu);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 3. Редактиране (EDIT)
         public async Task EditGpuAsync(int id, AddGpuViewModel model)
         {
             var gpu = await this.dbContext.Gpus.FindAsync(id);
             if (gpu == null) throw new ArgumentException("Invalid ID");
 
-            // Използваме същия помощен метод
             MapGpuData(gpu, model);
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 4. Взимане на данни за формата (GET)
         public async Task<AddGpuViewModel> GetGpuForEditAsync(int id)
         {
             var gpu = await this.dbContext.Gpus
@@ -165,7 +151,6 @@ namespace TechZone.Services.Data
 
             return new AddGpuViewModel
             {
-                // Общи данни
                 Id = gpu.Id,
                 Name = gpu.Name,
                 Price = gpu.Price,
@@ -175,7 +160,6 @@ namespace TechZone.Services.Data
                 WarrantyMonths = gpu.WarrantyMonths,
                 BrandId = gpu.BrandId,
 
-                // Специфични за GPU
                 MemorySizeGb = gpu.MemorySizeGb,
                 MemoryType = gpu.MemoryType,
                 CudaCores = gpu.CudaCores,
@@ -183,22 +167,18 @@ namespace TechZone.Services.Data
                 FrequencyMhz = gpu.FrequencyMhz,
                 Connectors = gpu.Connectors,
 
-                // Зареждаме марките за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
         //===============================================//
 
-        // 1. Помощен метод (Private)
+        
         private void MapMotherboardData(Motherboard mb, AddMotherboardViewModel model)
         {
-            // Попълва общите неща (Име, Цена, Марка, Снимка, Описание...)
             MapBaseProductInfo(mb, model);
 
-            // Гаранцията (ако MapBaseProductInfo не я попълва автоматично, остави я тук)
             mb.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични за Motherboard
             mb.Socket = model.Socket;
             mb.FormFactor = model.FormFactor;
             mb.Chipset = model.Chipset;
@@ -207,31 +187,26 @@ namespace TechZone.Services.Data
             mb.HasWifi = model.HasWifi;
         }
 
-        // 2. Създаване (CREATE)
         public async Task CreateMotherboardAsync(AddMotherboardViewModel model)
         {
             var motherboard = new Motherboard();
 
-            // Използваме помощния метод
             MapMotherboardData(motherboard, model);
 
             await this.dbContext.Motherboards.AddAsync(motherboard);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 3. Редактиране (EDIT)
         public async Task EditMotherboardAsync(int id, AddMotherboardViewModel model)
         {
             var motherboard = await this.dbContext.Motherboards.FindAsync(id);
             if (motherboard == null) throw new ArgumentException("Invalid ID");
 
-            // Използваме същия помощен метод
             MapMotherboardData(motherboard, model);
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 4. Взимане на данни за формата (GET)
         public async Task<AddMotherboardViewModel> GetMotherboardForEditAsync(int id)
         {
             var mb = await this.dbContext.Motherboards
@@ -241,7 +216,6 @@ namespace TechZone.Services.Data
 
             return new AddMotherboardViewModel
             {
-                // Общи данни
                 Id = mb.Id,
                 Name = mb.Name,
                 Price = mb.Price,
@@ -251,7 +225,6 @@ namespace TechZone.Services.Data
                 WarrantyMonths = mb.WarrantyMonths,
                 BrandId = mb.BrandId,
 
-                // Специфични за Motherboard
                 Socket = mb.Socket,
                 FormFactor = mb.FormFactor,
                 Chipset = mb.Chipset,
@@ -259,20 +232,15 @@ namespace TechZone.Services.Data
                 MemoryType = mb.MemoryType,
                 HasWifi = mb.HasWifi,
 
-                // Зареждаме марките за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
-        // 1. Помощен метод (Private)
         private void MapPowerSupplyData(PowerSupply psu, AddPowerSupplyViewModel model)
         {
-            // Попълва общите неща (Име, Цена, Марка...)
             MapBaseProductInfo(psu, model);
 
-            // Гаранцията
             psu.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични за PSU
             psu.PowerWatts = model.PowerWatts;
             psu.Certification = model.Certification;
             psu.IsModular = model.IsModular;
@@ -280,31 +248,26 @@ namespace TechZone.Services.Data
             psu.Standard = model.Standard;
         }
 
-        // 2. Създаване (CREATE)
         public async Task CreatePowerSupplyAsync(AddPowerSupplyViewModel model)
         {
             var psu = new PowerSupply();
 
-            // Използваме помощния метод
             MapPowerSupplyData(psu, model);
 
             await this.dbContext.PowerSupplies.AddAsync(psu);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 3. Редактиране (EDIT)
         public async Task EditPowerSupplyAsync(int id, AddPowerSupplyViewModel model)
         {
             var psu = await this.dbContext.PowerSupplies.FindAsync(id);
             if (psu == null) throw new ArgumentException("Invalid ID");
 
-            // Използваме същия помощен метод
             MapPowerSupplyData(psu, model);
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 4. Взимане на данни за формата (GET)
         public async Task<AddPowerSupplyViewModel> GetPowerSupplyForEditAsync(int id)
         {
             var psu = await this.dbContext.PowerSupplies
@@ -314,7 +277,6 @@ namespace TechZone.Services.Data
 
             return new AddPowerSupplyViewModel
             {
-                // Общи данни
                 Id = psu.Id,
                 Name = psu.Name,
                 Price = psu.Price,
@@ -324,27 +286,21 @@ namespace TechZone.Services.Data
                 WarrantyMonths = psu.WarrantyMonths,
                 BrandId = psu.BrandId,
 
-                // Специфични за PSU
                 PowerWatts = psu.PowerWatts,
                 Certification = psu.Certification,
                 IsModular = psu.IsModular,
                 FormFactor = psu.FormFactor,
                 Standard = psu.Standard,
 
-                // Зареждаме марките за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
-        // 1. Помощен метод (Private)
         private void MapRamData(Ram ram, AddRamViewModel model)
         {
-            // Попълва общите неща
             MapBaseProductInfo(ram, model);
 
-            // Гаранцията
             ram.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични за RAM
             ram.CapacityGb = model.CapacityGb;
             ram.Type = model.Type;
             ram.SpeedMt = model.SpeedMt;
@@ -355,31 +311,26 @@ namespace TechZone.Services.Data
             ram.HasHeatsink = model.HasHeatsink;
         }
 
-        // 2. Създаване (CREATE)
         public async Task CreateRamAsync(AddRamViewModel model)
         {
             var ram = new Ram();
 
-            // Използваме помощния метод
             MapRamData(ram, model);
 
             await this.dbContext.Rams.AddAsync(ram);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 3. Редактиране (EDIT)
         public async Task EditRamAsync(int id, AddRamViewModel model)
         {
             var ram = await this.dbContext.Rams.FindAsync(id);
             if (ram == null) throw new ArgumentException("Invalid ID");
 
-            // Използваме същия помощен метод
             MapRamData(ram, model);
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 4. Взимане на данни за формата (GET)
         public async Task<AddRamViewModel> GetRamForEditAsync(int id)
         {
             var ram = await this.dbContext.Rams
@@ -389,7 +340,6 @@ namespace TechZone.Services.Data
 
             return new AddRamViewModel
             {
-                // Общи данни
                 Id = ram.Id,
                 Name = ram.Name,
                 Price = ram.Price,
@@ -399,7 +349,6 @@ namespace TechZone.Services.Data
                 WarrantyMonths = ram.WarrantyMonths,
                 BrandId = ram.BrandId,
 
-                // Специфични за RAM
                 CapacityGb = ram.CapacityGb,
                 Type = ram.Type,
                 SpeedMt = ram.SpeedMt,
@@ -409,20 +358,15 @@ namespace TechZone.Services.Data
                 HasRgb = ram.HasRgb,
                 HasHeatsink = ram.HasHeatsink,
 
-                // Зареждаме марките за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
-        // 1. Помощен метод (Private)
         private void MapStorageDriveData(StorageDrive drive, AddStorageDriveViewModel model)
         {
-            // Попълва общите неща
             MapBaseProductInfo(drive, model);
 
-            // Гаранцията
             drive.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични за Storage
             drive.Type = model.Type;
             drive.Interface = model.Interface;
             drive.FormFactor = model.FormFactor;
@@ -431,31 +375,26 @@ namespace TechZone.Services.Data
             drive.WriteSpeedMb = model.WriteSpeedMb;
         }
 
-        // 2. Създаване (CREATE)
         public async Task CreateStorageDriveAsync(AddStorageDriveViewModel model)
         {
             var drive = new StorageDrive();
 
-            // Използваме помощния метод
             MapStorageDriveData(drive, model);
 
             await this.dbContext.StorageDrives.AddAsync(drive);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 3. Редактиране (EDIT)
         public async Task EditStorageDriveAsync(int id, AddStorageDriveViewModel model)
         {
             var drive = await this.dbContext.StorageDrives.FindAsync(id);
             if (drive == null) throw new ArgumentException("Invalid ID");
 
-            // Използваме същия помощен метод
             MapStorageDriveData(drive, model);
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 4. Взимане на данни за формата (GET)
         public async Task<AddStorageDriveViewModel> GetStorageDriveForEditAsync(int id)
         {
             var drive = await this.dbContext.StorageDrives
@@ -465,7 +404,6 @@ namespace TechZone.Services.Data
 
             return new AddStorageDriveViewModel
             {
-                // Общи данни
                 Id = drive.Id,
                 Name = drive.Name,
                 Price = drive.Price,
@@ -475,7 +413,6 @@ namespace TechZone.Services.Data
                 WarrantyMonths = drive.WarrantyMonths,
                 BrandId = drive.BrandId,
 
-                // Специфични за Storage
                 Type = drive.Type,
                 Interface = drive.Interface,
                 FormFactor = drive.FormFactor,
@@ -483,20 +420,15 @@ namespace TechZone.Services.Data
                 ReadSpeedMb = drive.ReadSpeedMb,
                 WriteSpeedMb = drive.WriteSpeedMb,
 
-                // Зареждаме марките за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
-        // 1. Помощен метод (Private)
         private void MapCaseData(Case computerCase, AddCaseViewModel model)
         {
-            // Попълва общите неща (Име, Цена, Марка...)
             MapBaseProductInfo(computerCase, model);
 
-            // Гаранцията
             computerCase.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични за Case
             computerCase.FormFactor = model.FormFactor;
             computerCase.SupportedFormats = model.SupportedFormats;
             computerCase.HasMeshFront = model.HasMeshFront;
@@ -506,31 +438,26 @@ namespace TechZone.Services.Data
             computerCase.HeightMm = model.HeightMm;
         }
 
-        // 2. Създаване (CREATE) - Вече използва помощния метод
         public async Task CreateCaseAsync(AddCaseViewModel model)
         {
             var computerCase = new Case();
 
-            // ЕДИН РЕД върши всичко!
             MapCaseData(computerCase, model);
 
             await this.dbContext.Cases.AddAsync(computerCase);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 3. Редактиране (EDIT)
         public async Task EditCaseAsync(int id, AddCaseViewModel model)
         {
             var computerCase = await this.dbContext.Cases.FindAsync(id);
             if (computerCase == null) throw new ArgumentException("Invalid ID");
 
-            // Използваме същия помощен метод
             MapCaseData(computerCase, model);
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 4. Взимане на данни за формата (GET)
         public async Task<AddCaseViewModel> GetCaseForEditAsync(int id)
         {
             var computerCase = await this.dbContext.Cases
@@ -540,7 +467,6 @@ namespace TechZone.Services.Data
 
             return new AddCaseViewModel
             {
-                // Общи данни
                 Id = computerCase.Id,
                 Name = computerCase.Name,
                 Price = computerCase.Price,
@@ -550,7 +476,6 @@ namespace TechZone.Services.Data
                 WarrantyMonths = computerCase.WarrantyMonths,
                 BrandId = computerCase.BrandId,
 
-                // Специфични за Case
                 FormFactor = computerCase.FormFactor,
                 SupportedFormats = computerCase.SupportedFormats,
                 HasMeshFront = computerCase.HasMeshFront,
@@ -559,20 +484,15 @@ namespace TechZone.Services.Data
                 WidthMm = computerCase.WidthMm,
                 HeightMm = computerCase.HeightMm,
 
-                // Зареждаме марките за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
-        // 1. Помощен метод (Private)
         private void MapDisplayData(Display display, AddDisplayViewModel model)
         {
-            // Попълва общите неща
             MapBaseProductInfo(display, model);
 
-            // Гаранцията
             display.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични за Display
             display.ScreenSizeInch = model.ScreenSizeInch;
             display.Resolution = model.Resolution;
             display.RefreshRateHz = model.RefreshRateHz;
@@ -582,31 +502,26 @@ namespace TechZone.Services.Data
             display.IsCurved = model.IsCurved;
         }
 
-        // 2. Създаване (CREATE)
         public async Task CreateDisplayAsync(AddDisplayViewModel model)
         {
             var display = new Display();
 
-            // Използваме помощния метод
             MapDisplayData(display, model);
 
             await this.dbContext.Displays.AddAsync(display);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 3. Редактиране (EDIT)
         public async Task EditDisplayAsync(int id, AddDisplayViewModel model)
         {
             var display = await this.dbContext.Displays.FindAsync(id);
             if (display == null) throw new ArgumentException("Invalid ID");
 
-            // Използваме същия помощен метод
             MapDisplayData(display, model);
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // 4. Взимане на данни за формата (GET)
         public async Task<AddDisplayViewModel> GetDisplayForEditAsync(int id)
         {
             var display = await this.dbContext.Displays
@@ -616,7 +531,6 @@ namespace TechZone.Services.Data
 
             return new AddDisplayViewModel
             {
-                // Общи данни
                 Id = display.Id,
                 Name = display.Name,
                 Price = display.Price,
@@ -626,7 +540,6 @@ namespace TechZone.Services.Data
                 WarrantyMonths = display.WarrantyMonths,
                 BrandId = display.BrandId,
 
-                // Специфични за Display
                 ScreenSizeInch = display.ScreenSizeInch,
                 Resolution = display.Resolution,
                 RefreshRateHz = display.RefreshRateHz,
@@ -635,17 +548,14 @@ namespace TechZone.Services.Data
                 Ports = display.Ports,
                 IsCurved = display.IsCurved,
 
-                // Зареждаме марките за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
         private void MapKeyboardData(Keyboard keyboard, AddKeyboardViewModel model)
         {
-            // Общи
             MapBaseProductInfo(keyboard, model);
             keyboard.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични
             keyboard.SwitchType = model.SwitchType;
             keyboard.Layout = model.Layout;
             keyboard.SizePercentage = model.SizePercentage;
@@ -653,28 +563,25 @@ namespace TechZone.Services.Data
             keyboard.HasRgb = model.HasRgb;
         }
 
-        // --- CREATE ---
         public async Task CreateKeyboardAsync(AddKeyboardViewModel model)
         {
             var keyboard = new Keyboard();
-            MapKeyboardData(keyboard, model); // Използваме помощника
+            MapKeyboardData(keyboard, model);
 
             await this.dbContext.Keyboards.AddAsync(keyboard);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // --- EDIT ---
+        
         public async Task EditKeyboardAsync(int id, AddKeyboardViewModel model)
         {
             var keyboard = await this.dbContext.Keyboards.FindAsync(id);
             if (keyboard == null) throw new ArgumentException("Invalid ID");
 
-            MapKeyboardData(keyboard, model); // Използваме помощника
-
+            MapKeyboardData(keyboard, model); 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // --- GET FOR EDIT ---
         public async Task<AddKeyboardViewModel> GetKeyboardForEditAsync(int id)
         {
             var kb = await this.dbContext.Keyboards
@@ -684,7 +591,6 @@ namespace TechZone.Services.Data
 
             return new AddKeyboardViewModel
             {
-                // Общи
                 Id = kb.Id,
                 Name = kb.Name,
                 Price = kb.Price,
@@ -694,24 +600,20 @@ namespace TechZone.Services.Data
                 WarrantyMonths = kb.WarrantyMonths,
                 BrandId = kb.BrandId,
 
-                // Специфични
                 SwitchType = kb.SwitchType,
                 Layout = kb.Layout,
                 SizePercentage = kb.SizePercentage,
                 ConnectionType = kb.ConnectionType,
                 HasRgb = kb.HasRgb,
 
-                // Марки за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }
         private void MapMouseData(Mouse mouse, AddMouseViewModel model)
         {
-            // Общи
             MapBaseProductInfo(mouse, model);
             mouse.WarrantyMonths = model.WarrantyMonths;
 
-            // Специфични
             mouse.Dpi = model.Dpi;
             mouse.ConnectionType = model.ConnectionType;
             mouse.ButtonsCount = model.ButtonsCount;
@@ -720,28 +622,26 @@ namespace TechZone.Services.Data
             mouse.WeightGrams = model.WeightGrams;
         }
 
-        // --- CREATE ---
         public async Task CreateMouseAsync(AddMouseViewModel model)
         {
             var mouse = new Mouse();
-            MapMouseData(mouse, model); // Използваме помощника
+            MapMouseData(mouse, model); 
 
-            await this.dbContext.Mice.AddAsync(mouse); // Внимавай дали е Mice или Mouses в DbContext-а
+            await this.dbContext.Mice.AddAsync(mouse);
             await this.dbContext.SaveChangesAsync();
         }
 
-        // --- EDIT ---
         public async Task EditMouseAsync(int id, AddMouseViewModel model)
         {
             var mouse = await this.dbContext.Mice.FindAsync(id);
             if (mouse == null) throw new ArgumentException("Invalid ID");
 
-            MapMouseData(mouse, model); // Използваме помощника
+            MapMouseData(mouse, model); 
 
             await this.dbContext.SaveChangesAsync();
         }
 
-        // --- GET FOR EDIT ---
+    
         public async Task<AddMouseViewModel> GetMouseForEditAsync(int id)
         {
             var mouse = await this.dbContext.Mice
@@ -751,7 +651,6 @@ namespace TechZone.Services.Data
 
             return new AddMouseViewModel
             {
-                // Общи
                 Id = mouse.Id,
                 Name = mouse.Name,
                 Price = mouse.Price,
@@ -761,7 +660,6 @@ namespace TechZone.Services.Data
                 WarrantyMonths = mouse.WarrantyMonths,
                 BrandId = mouse.BrandId,
 
-                // Специфични
                 Dpi = mouse.Dpi,
                 ConnectionType = mouse.ConnectionType,
                 ButtonsCount = mouse.ButtonsCount,
@@ -769,7 +667,6 @@ namespace TechZone.Services.Data
                 SensorType = mouse.SensorType,
                 WeightGrams = mouse.WeightGrams,
 
-                // Марки за падащото меню
                 Brands = await GetAllBrandsAsync()
             };
         }

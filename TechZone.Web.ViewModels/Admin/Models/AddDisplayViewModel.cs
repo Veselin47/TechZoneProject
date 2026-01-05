@@ -15,11 +15,11 @@ namespace TechZone.Web.ViewModels.Admin.Models
 
         [Required(ErrorMessage = "Резолюцията е задължителна")]
         [Display(Name = "Резолюция")]
-        public string Resolution { get; set; } = null!; // 1920x1080, 2560x1440
+        public string Resolution { get; set; } = null!; 
 
         [Required(ErrorMessage = "Типът на матрицата е задължителен")]
         [Display(Name = "Тип матрица (Panel)")]
-        public string PanelType { get; set; } = null!; // IPS, VA, TN, OLED
+        public string PanelType { get; set; } = null!; 
 
         [Required(ErrorMessage = "Честотата е задължителна")]
         [Range(30, 1000, ErrorMessage = "Честотата трябва да е между 30Hz и 1000Hz")]
@@ -33,7 +33,7 @@ namespace TechZone.Web.ViewModels.Admin.Models
 
         [Required(ErrorMessage = "Портовете са задължителни")]
         [Display(Name = "Портове")]
-        public string Ports { get; set; } = null!; // HDMI 2.1, DP 1.4
+        public string Ports { get; set; } = null!;
 
         [Display(Name = "Извит екран (Curved)")]
         public bool IsCurved { get; set; }

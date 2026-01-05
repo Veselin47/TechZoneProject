@@ -10,7 +10,6 @@ namespace TechZoneProject.Data.Configurations
         {
             builder.ToTable("WishlistItems");
 
-            // Композитен ключ - един user може да хареса един продукт само веднъж
             builder.HasKey(w => new { w.UserId, w.ProductId });
 
             builder.HasQueryFilter(w => !w.Product.IsDeleted);

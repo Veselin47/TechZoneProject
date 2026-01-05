@@ -1,0 +1,91 @@
+﻿@model TechZone.Web.ViewModels.Admin.Models.OrderDetailsAdminViewModel
+
+@{
+    ViewData["Title"] = $"Поръчка #{Model.Id}";
+}
+
+<div class="admin-container container">
+    <div class="mb-3">
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm"><i class="fas fa-arrow-left"></i> Назад към поръчките</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark border-secondary h-100">
+                <div class="card-header border-secondary">
+                    <h5 class="mb-0 text-white">Данни за клиента</h5>
+                </div>
+                <div class="card-body text-white">
+                    <p><strong>Име:</strong> @Model.CustomerName</p>
+                    <p><strong>Email:</strong> @Model.Email</p>
+                    <p><strong>Тел:</strong> @Model.Phone</p>
+                    <hr class="border-secondary">
+                    <p><strong>Град:</strong> @Model.City, @Model.PostalCode</p>
+                    <p><strong>Адрес:</strong> @Model.ShippingAddress</p>
+                    @if (!string.IsNullOrEmpty(Model.Note))
+                    {
+                        <div class="alert alert-secondary mt-3">
+                            <small>Бележка:</small><br>
+                            @Model.Note
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card bg-dark border-secondary mb-4">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted">Текущ статус:</span>
+                        <h3 class="mb-0 text-white">@Model.Status</h3>
+                    </div>
+                    <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <select name="status" class="form-select-dark" style="width: auto;">
+                            <option value="Pending">Pending (Чакаща)</option>
+                            <option value="Processing">Processing (Обработва се)</option>
+                            <option value="Shipped">Shipped (Изпратена)</option>
+                            <option value="Delivered">Delivered (Доставена)</option>
+                            <option value="Cancelled">Cancelled (Отказна)</option>
+                        </select>
+                        <button type="submit" class="btn btn-tech">Обнови</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card bg-dark border-secondary">
+                <div class="card-header border-secondary">
+                    <h5 class="mb-0 text-white">Поръчани продукти</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-dark table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Продукт</th>
+                                <th>Цена</th>
+                                <th>Кол.</th>
+                                <th>Общо</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.Price.ToString("C")</td>
+                                    <td>@item.Quantity</td>
+                                    <td class="text-success fw-bold">@item.Total.ToString("C")</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold">ОБЩО:</td>
+                                <td class="text-success fw-bold fs-5">@Model.TotalAmount.ToString("C")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

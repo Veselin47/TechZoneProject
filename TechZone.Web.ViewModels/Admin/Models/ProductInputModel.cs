@@ -28,8 +28,7 @@ namespace TechZone.Web.ViewModels.Admin.Models
 
         [Required]
         [Display(Name = "Производител (ID)")]
-        public int BrandId { get; set; } // Ще избираме от падащо меню
-        // НОВО: Добавяме Наличност
+        public int BrandId { get; set; } 
         [Required]
         [Range(0, 10000)]
         [Display(Name = "Наличност (брой)")]

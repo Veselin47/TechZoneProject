@@ -6,7 +6,16 @@ body {
     color: #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding-bottom: 50px; /* Място отдолу */
+    /* МАХАМЕ padding-bottom, вече не е нужен */
+    padding-bottom: 0;
+    /* ТОВА Е КЛЮЧЪТ КЪМ ОПРАВЯНЕТО: */
+    min-height: 100vh; /* Екранът е висок поне колкото устройството */
+    display: flex; /* Включваме Flexbox */
+    flex-direction: column; /* Подреждаме елементите вертикално */
+}
+.main-content {
+    flex: 1; /* Това кара контейнера да заема всичкото свободно място */
+    width: 100%; /* Гарантира пълна ширина */
 }
 
 /* Навигация (Запазваме я както си беше) */
@@ -99,11 +108,13 @@ h2, h3, h4, h5 {
     background-color: #1e1e1e;
     border: 1px solid #333;
     border-radius: 8px;
-    overflow: hidden; /* За да не излиза снимката */
+    overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     display: flex;
     flex-direction: column;
-    height: 100%; /* Равни височини */
+    /* ПРОМЯНА ТУК: */
+    height: 100%; /* Запазваме го за равни карти в магазина */
+    min-height: auto; /* Позволява на картата да расте, ако текстът е много */
 }
 
     .card:hover {
@@ -1077,3 +1088,146 @@ h2, h3, h4, h5 {
         background-color: #dc3545; /* Червено за сърце */
         border-color: #dc3545;
     }
+
+/*.........*/
+.category-hover-card {
+    transition: transform 0.3s ease;
+}
+
+    .category-hover-card:hover {
+        transform: scale(1.03);
+        cursor: pointer;
+    }
+
+.opacity-50 {
+    opacity: 0.5;
+}
+
+/* =========================================
+   12. PRODUCT DETAILS PAGE
+   ========================================= */
+
+/* Контейнер за снимката */
+.product-image-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px; /* За да не "скача" лейаута */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.product-main-image {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+    /* Ако снимките са с бял фон (често срещано), може да добавим бял фон зад тях: */
+    background-color: #fff;
+    padding: 10px;
+}
+
+/* Заглавие и мета данни */
+.product-info-header {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.product-brand-badge {
+    color: #00ff88;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-category-badge {
+    color: #888;
+    padding-left: 10px;
+    border-left: 1px solid #444;
+}
+
+.product-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.product-price {
+    font-size: 2.5rem;
+    color: #00ff88;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.product-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+/* Карта със спецификации */
+.specs-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.specs-header {
+    background-color: #222;
+    padding: 15px 20px;
+    border-bottom: 1px solid #333;
+    color: #fff;
+}
+
+/* Таблица със спецификации */
+.specs-table th {
+    width: 40%;
+    color: #aaa;
+    font-weight: 500;
+    padding-left: 20px;
+    vertical-align: middle;
+}
+
+.specs-table td {
+    color: #fff;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.specs-table tr:hover {
+    background-color: #2a2a2a !important;
+}
+
+/* Адаптивност за мобилни */
+@media (max-width: 768px) {
+    .product-title {
+        font-size: 1.8rem;
+    }
+
+    .product-price {
+        font-size: 2rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .specs-table th, .specs-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .specs-table th {
+        color: #00ff88;
+        padding-top: 15px;
+    }
+}

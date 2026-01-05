@@ -5,7 +5,7 @@
         public int WarrantyMonths { get; set; }
         public double ScreenSizeInch { get; set; }
         public string Resolution { get; set; } = null!;
-        public string PanelType { get; set; } = null!; // IPS
+        public string PanelType { get; set; } = null!; 
         public int RefreshRateHz { get; set; }
         public int ResponseTimeMs { get; set; }
         public bool IsCurved { get; set; }

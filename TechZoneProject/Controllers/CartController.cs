@@ -30,7 +30,6 @@ namespace TechZoneProject.Controllers
             var userId = userManager.GetUserId(User);
             await cartService.AddToCartAsync(userId, productId);
 
-            // Връщаме потребителя там, откъдето е дошъл (каталога)
             if (!string.IsNullOrEmpty(returnUrl))
             {
                 return Redirect(returnUrl);

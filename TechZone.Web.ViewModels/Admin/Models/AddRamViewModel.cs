@@ -15,7 +15,7 @@ namespace TechZone.Web.ViewModels.Admin.Models
 
         [Required(ErrorMessage = "Типът е задължителен")]
         [Display(Name = "Тип памет")]
-        public string Type { get; set; } = null!; // DDR4, DDR5
+        public string Type { get; set; } = null!;
 
         [Required(ErrorMessage = "Скоростта е задължителна")]
         [Range(1000, 10000, ErrorMessage = "Скоростта трябва да е реална (напр. 3200, 5600, 6000)")]
@@ -25,14 +25,14 @@ namespace TechZone.Web.ViewModels.Admin.Models
         [Required(ErrorMessage = "Таймингът е задължителен")]
         [StringLength(20)]
         [Display(Name = "Тайминг (Latency)")]
-        public string Timing { get; set; } = null!; // CL16, CL36, CL40
+        public string Timing { get; set; } = null!; 
 
         [Required(ErrorMessage = "Цветът е задължителен")]
         [Display(Name = "Цвят")]
         public string Color { get; set; } = null!;
 
         [Display(Name = "Комплект (Kit)")]
-        public bool IsKit { get; set; } // Дали са 2 плочки или 1
+        public bool IsKit { get; set; } 
 
         [Display(Name = "RGB Осветление")]
         public bool HasRgb { get; set; }

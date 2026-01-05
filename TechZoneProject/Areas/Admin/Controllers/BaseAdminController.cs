@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TechZoneProject.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")] // Казваме, че това е част от Admin зоната
-    [Authorize(Roles = "Administrator")] // САМО ЗА АДМИНИСТРАТОРИ!
+    [Area("Admin")] 
+    [Authorize(Roles = "Administrator")] 
     public class BaseAdminController : Controller
     {
 

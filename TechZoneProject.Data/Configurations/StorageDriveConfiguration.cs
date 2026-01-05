@@ -10,9 +10,9 @@ namespace TechZoneProject.Data.Configurations
         {
             builder.ToTable("StorageDrives");
 
-            builder.Property(s => s.Type).IsRequired().HasMaxLength(20); // NVMe
-            builder.Property(s => s.Interface).IsRequired().HasMaxLength(20); // PCIe 4.0
-            builder.Property(s => s.FormFactor).IsRequired().HasMaxLength(20); // M.2
+            builder.Property(s => s.Type).IsRequired().HasMaxLength(20); 
+            builder.Property(s => s.Interface).IsRequired().HasMaxLength(20); 
+            builder.Property(s => s.FormFactor).IsRequired().HasMaxLength(20); 
         }
     }
 }

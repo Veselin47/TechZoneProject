@@ -11,19 +11,19 @@ namespace TechZone.Web.ViewModels.Admin.Models
     {
         [Required(ErrorMessage = "Типът на суичовете е задължителен")]
         [Display(Name = "Тип суичове (Switch Type)")]
-        public string SwitchType { get; set; } = null!; // Mechanical, Membrane, Optical
+        public string SwitchType { get; set; } = null!; 
 
         [Required(ErrorMessage = "Подредбата е задължителна")]
         [Display(Name = "Подредба (Layout)")]
-        public string Layout { get; set; } = null!; // US, UK, BG Phonetic
+        public string Layout { get; set; } = null!; 
 
         [Required(ErrorMessage = "Размерът е задължителен")]
         [Display(Name = "Размер (Form Factor)")]
-        public string SizePercentage { get; set; } = null!; // 100% Full, TKL 80%, 60%
+        public string SizePercentage { get; set; } = null!; 
 
         [Required(ErrorMessage = "Типът свързване е задължителен")]
         [Display(Name = "Свързване")]
-        public string ConnectionType { get; set; } = null!; // Wired USB, Wireless, Bluetooth
+        public string ConnectionType { get; set; } = null!;
 
         [Display(Name = "RGB Подсветка")]
         public bool HasRgb { get; set; }

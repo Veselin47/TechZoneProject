@@ -18,18 +18,18 @@ namespace TechZone.Web.ViewModels.Admin.Models
 
         [Required(ErrorMessage = "Сертификатът е задължителен")]
         [Display(Name = "80+ Сертификат")]
-        public string Certification { get; set; } = null!; // 80+ Gold, Platinum и т.н.
+        public string Certification { get; set; } = null!; 
 
         [Display(Name = "Модулно захранване")]
         public bool IsModular { get; set; }
 
         [Required(ErrorMessage = "Форм-факторът е задължителен")]
         [Display(Name = "Форм-фактор")]
-        public string FormFactor { get; set; } = null!; // ATX, SFX
+        public string FormFactor { get; set; } = null!; 
 
         [Required(ErrorMessage = "Стандартът е задължителен")]
         [Display(Name = "Стандарт")]
-        public string Standard { get; set; } = null!; // ATX 3.0, ATX 2.4
+        public string Standard { get; set; } = null!; 
 
     }
 }

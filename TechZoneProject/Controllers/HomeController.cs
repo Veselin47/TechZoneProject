@@ -10,7 +10,6 @@ namespace TechZone.Web.Controllers
     {
         private readonly IProductService productService;
 
-        // Инжектираме сървиса
         public HomeController(IProductService productService)
         {
             this.productService = productService;
@@ -18,7 +17,6 @@ namespace TechZone.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Дърпаме последните 6 продукта
             var viewModel = await this.productService.GetLastProductsAsync(6);
 
             return View(viewModel);
@@ -27,6 +25,11 @@ namespace TechZone.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Contacts()
+        {
+            return View();
         }
     }
 }

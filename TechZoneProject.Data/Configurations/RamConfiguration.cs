@@ -10,8 +10,8 @@ namespace TechZoneProject.Data.Configurations
         {
             builder.ToTable("Rams");
 
-            builder.Property(r => r.Type).IsRequired().HasMaxLength(10); // DDR5
-            builder.Property(r => r.Timing).IsRequired().HasMaxLength(10); // CL40
+            builder.Property(r => r.Type).IsRequired().HasMaxLength(10); 
+            builder.Property(r => r.Timing).IsRequired().HasMaxLength(10); 
             builder.Property(r => r.Color).HasMaxLength(20);
         }
     }

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TechZone.Services.Contracts;
 using TechZone.Services.Data;
 using TechZone.Services.Data.Interfaces;
+using TechZone.Services.Data.Interfaces.TechZone.Services.Contracts;
 using TechZoneProject.Data;
 using TechZoneProject.Data.Models;
 using TechZoneProject.Data.Seeding;
@@ -36,6 +38,8 @@ namespace TechZoneProject
             builder.Services.AddScoped<IAdminProductService, AdminProductService>();
             builder.Services.AddScoped<ICartService, CartService>();
             builder.Services.AddScoped<IWishlistService, WishlistService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IAdminOrderService, AdminOrderService>(); 
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

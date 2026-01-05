@@ -22,7 +22,7 @@ namespace TechZone.Services.Data
 
         public async Task AddToWishlistAsync(string userId, int productId)
         {
-            // Проверка дали вече не е добавен
+          
             bool exists = await context.WishlistItems
                 .AnyAsync(w => w.UserId == userId && w.ProductId == productId);
 
@@ -55,7 +55,7 @@ namespace TechZone.Services.Data
                 .Where(w => w.UserId == userId)
                 .Include(w => w.Product)
                 .ThenInclude(p => p.Brand)
-                .Select(w => new ProductAllViewModel // Преизползваме модела за продукти
+                .Select(w => new ProductAllViewModel 
                 {
                     Id = w.Product.Id,
                     Name = w.Product.Name,

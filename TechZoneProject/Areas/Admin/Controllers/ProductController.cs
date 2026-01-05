@@ -22,13 +22,12 @@ namespace TechZoneProject.Areas.Admin.Controllers
             return View();
         }
 
-        // !!! Методи за добавяне на продукти от различни типове !!!
+       
 
-        // GET: Отваря формата за попълване
+        
         [HttpGet]
         public async Task<IActionResult> AddCpu()
         {
-            // 1. Създаваме модела и зареждаме марките вътре в него
             var model = new AddCpuViewModel
             {
                 Brands = await adminService.GetAllBrandsAsync()
@@ -40,28 +39,22 @@ namespace TechZoneProject.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCpu(AddCpuViewModel model)
         {
-            // 1. Проверка за валидност (Required, Range и т.н.)
             if (!ModelState.IsValid)
             {
-                // ВАЖНО: Ако има грешка, Brands ще е null, затова ги зареждаме пак!
                 model.Brands = await adminService.GetAllBrandsAsync();
                 return View(model);
             }
 
             try
             {
-                // 2. Опит за запис
                 await adminService.CreateCpuAsync(model);
 
-                // 3. Успех -> Връщаме се в списъка с продукти в АДМИН зоната
                 return RedirectToAction("SelectType", "Product", new { area = "Admin" });
             }
             catch (Exception)
             {
-                // 4. Грешка -> Показваме съобщение на потребителя
                 ModelState.AddModelError("", "Възникна неочаквана грешка при запис. Моля опитайте отново.");
 
-                // Зареждаме марките пак, иначе падащото меню ще изчезне
                 model.Brands = await adminService.GetAllBrandsAsync();
 
                 return View(model);
@@ -389,10 +382,9 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetCpuForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
+             
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
                 return View("AddCpu", model);
             }
             catch (Exception)
@@ -414,7 +406,7 @@ namespace TechZoneProject.Areas.Admin.Controllers
             try
             {
                 await this.adminService.EditCpuAsync(id, model);
-                return RedirectToAction(nameof(All)); // Обратно в таблицата
+                return RedirectToAction(nameof(All)); 
             }
             catch (Exception)
             {
@@ -431,10 +423,8 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetGpuForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
                 return View("AddGpu", model);
             }
             catch (Exception)
@@ -456,7 +446,7 @@ namespace TechZoneProject.Areas.Admin.Controllers
             try
             {
                 await this.adminService.EditGpuAsync(id, model);
-                return RedirectToAction(nameof(All)); // Обратно в таблицата
+                return RedirectToAction(nameof(All)); 
             }
             catch (Exception)
             {
@@ -474,10 +464,10 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetMotherboardForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
+               
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
+               
                 return View("AddMotherboard", model);
             }
             catch (Exception)
@@ -499,7 +489,7 @@ namespace TechZoneProject.Areas.Admin.Controllers
             try
             {
                 await this.adminService.EditMotherboardAsync(id, model);
-                return RedirectToAction(nameof(All)); // Обратно в таблицата
+                return RedirectToAction(nameof(All)); 
             }
             catch (Exception)
             {
@@ -516,10 +506,10 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetRamForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
+                
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
+                
                 return View("AddRam", model);
             }
             catch (Exception)
@@ -558,10 +548,10 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetPowerSupplyForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
+          
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
+               
                 return View("AddPowerSupply", model);
             }
             catch (Exception)
@@ -602,10 +592,10 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetStorageDriveForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
+             
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
+                
                 return View("AddStorageDrive", model);
             }
             catch (Exception)
@@ -644,10 +634,10 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetCaseForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
+            
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
+               
                 return View("AddCase", model);
             }
             catch (Exception)
@@ -686,10 +676,10 @@ namespace TechZoneProject.Areas.Admin.Controllers
             {
                 var model = await this.adminService.GetDisplayForEditAsync(id);
 
-                // Слагаме флаг, за да може View-то да знае, че редактираме
+               
                 ViewData["IsEdit"] = true;
 
-                // ВРЪЩАМЕ СЪЩОТО VIEW КАТО ЗА ДОБАВЯНЕ!
+              
                 return View("AddDisplay", model);
             }
             catch (Exception)

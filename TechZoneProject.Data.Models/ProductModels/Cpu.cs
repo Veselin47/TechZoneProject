@@ -9,7 +9,7 @@
         public double BaseFrequencyGhz { get; set; }
         public double TurboFrequencyGhz { get; set; }
         public string Cache { get; set; } = null!;
-        public string Series { get; set; } = null!; // Ryzen 7, i9
+        public string Series { get; set; } = null!; 
         public bool HasBoxCooler { get; set; }
     }
 }

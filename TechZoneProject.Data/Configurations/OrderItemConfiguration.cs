@@ -15,7 +15,7 @@ namespace TechZoneProject.Data.Configurations
             builder.HasOne(oi => oi.Order)
                 .WithMany(o => o.OrderItems)
                 .HasForeignKey(oi => oi.OrderId)
-                .OnDelete(DeleteBehavior.Cascade); // Ако изтриеш поръчка, изтрий и редовете
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(oi => oi.Product)
                 .WithMany(p => p.OrderItems)

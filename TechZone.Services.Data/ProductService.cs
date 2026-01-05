@@ -11,7 +11,7 @@ namespace TechZone.Services.Data
     {
         private readonly ApplicationDbContext dbContext;
 
-        // Взимаме базата чрез Constructor Injection
+        
         public ProductService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -39,7 +39,6 @@ namespace TechZone.Services.Data
         {
             IQueryable<Product> query = this.dbContext.Products;
 
-            // Тук използваме силата на EF Core - филтрираме по тип
             switch (categoryName.ToLower())
             {
                 case "cpu":
@@ -56,10 +55,10 @@ namespace TechZone.Services.Data
                     query = this.dbContext.Displays;
                     break;
                 case "keyboard":
-                    query = this.dbContext.Keyboards; // Ако ти дава грешка, значи не си ги добавил в DbContext
+                    query = this.dbContext.Keyboards;
                     break;
                 case "mouse":
-                    query = this.dbContext.Mice;      // Внимание: Множественото число на Mouse е Mice в EF Core 
+                    query = this.dbContext.Mice;     
                     break;
                 case "case":
                     query = this.dbContext.Cases;
@@ -83,10 +82,10 @@ namespace TechZone.Services.Data
         }
         public async Task<AllProductsViewModel> GetFilteredProductsAsync(string category, ProductSearchQueryModel query)
         {
-            // 1. Взимаме всички продукти като Базова заявка
+           
             IQueryable<Product> productsQuery = this.dbContext.Products;
 
-            // 2. Филтрираме по КАТЕГОРИЯ
+         
             switch (category.ToLower())
             {
                 case "cpu": productsQuery = this.dbContext.Cpus; break;
@@ -97,28 +96,25 @@ namespace TechZone.Services.Data
                 case "keyboard": productsQuery = this.dbContext.Keyboards; break;
                 case "mouse": productsQuery = this.dbContext.Mice; break;
                 case "case": productsQuery = this.dbContext.Cases; break;
-                case "ssd":    // Оставяме ги за всеки случай, ако някой напише стария линк
+                case "ssd":    
                 case "hdd":
                 case "storage": productsQuery = this.dbContext.StorageDrives; break;
                 case "psu": productsQuery = this.dbContext.PowerSupplies; break;
  
-                default: break; // Ако е грешна категория, връща празен списък по-долу
+                default: break;
             }
 
-            // 3. Филтрираме по МАРКА (Ако потребителят е избрал такава)
             if (!string.IsNullOrEmpty(query.Brand))
             {
                 productsQuery = productsQuery.Where(p => p.Brand.Name == query.Brand);
             }
 
-            // 4. Филтрираме по ТЪРСЕНЕ (Текст)
             if (!string.IsNullOrEmpty(query.SearchTerm))
             {
                 string wildCard = $"%{query.SearchTerm.ToLower()}%";
                 productsQuery = productsQuery.Where(p => EF.Functions.Like(p.Name.ToLower(), wildCard));
             }
 
-            // 5. Филтрираме по ЦЕНА
             if (query.MinPrice.HasValue)
             {
                 productsQuery = productsQuery.Where(p => p.Price >= query.MinPrice.Value);
@@ -127,26 +123,25 @@ namespace TechZone.Services.Data
             {
                 productsQuery = productsQuery.Where(p => p.Price <= query.MaxPrice.Value);
             }
-            // НОВО: Филтър за Дискове
+            
             if (category.ToLower() == "storage" && !string.IsNullOrEmpty(query.StorageType))
             {
-                // Тук допускам, че в StorageDrive имаш поле 'Type' (string или enum)
-                // Ако нямаш, ще трябва да филтрираш по името: .Where(x => x.Name.Contains("SSD"))
+                
 
                 productsQuery = productsQuery
                     .OfType<StorageDrive>()
                     .Where(s => s.Type == query.StorageType);
             }
-            // 6. СОРТИРАНЕ
+            
             productsQuery = query.Sorting switch
             {
-                0 => productsQuery.OrderBy(p => p.Price), // Най-ниска цена
-                1 => productsQuery.OrderByDescending(p => p.Price), // Най-висока
-                2 => productsQuery.OrderByDescending(p => p.Id), // Най-нови
+                0 => productsQuery.OrderBy(p => p.Price), 
+                1 => productsQuery.OrderByDescending(p => p.Price), 
+                2 => productsQuery.OrderByDescending(p => p.Id), 
                 _ => productsQuery.OrderBy(p => p.Id)
             };
 
-            // 7. Взимаме резултатите и ги превръщаме във ViewModels
+          
             var products = await productsQuery
                 .Where(p => !p.IsDeleted)
                 .Select(p => new ProductIndexViewModel
@@ -160,10 +155,10 @@ namespace TechZone.Services.Data
                 })
                 .ToListAsync();
 
-            // 8. Взимаме СПИСЪК С МАРКИ (ОПРАВЕНО)
-            // Трябва да филтрираме марките точно както филтрираме продуктите!
+            
+           
 
-            IQueryable<Product> brandsQuery = this.dbContext.Products; // По подразбиране
+            IQueryable<Product> brandsQuery = this.dbContext.Products; 
 
             switch (category.ToLower())
             {
@@ -200,17 +195,17 @@ namespace TechZone.Services.Data
                 case "mouse":
                     brandsQuery = this.dbContext.Mice;
                     break;
-                    // Добави тук слушалки и други, когато ги създадеш
+              
             }
 
             var brands = await brandsQuery
                 .Where(p => !p.IsDeleted)
                 .Select(p => p.Brand.Name)
-                .Distinct() // Взимаме само уникалните имена
-                .OrderBy(b => b) // Подреждаме ги по азбучен ред
+                .Distinct() 
+                .OrderBy(b => b) 
                 .ToListAsync();
 
-            // 9. Сглобяваме всичко
+         
             return new AllProductsViewModel
             {
                 CategoryName = category,
@@ -218,6 +213,139 @@ namespace TechZone.Services.Data
                 Brands = brands,
                 SearchQuery = query 
             };
+        }
+        public async Task<ProductDetailsViewModel> GetProductDetailsAsync(int id)
+        {
+          
+            var product = await dbContext.Products
+                .Include(p => p.Brand)
+                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+
+            if (product == null) return null;
+
+           
+            var model = new ProductDetailsViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price,
+                IsAvailable = product.StockQuantity > 0,
+                Brand = product.Brand.Name,
+                Category = product.GetType().Name 
+            };
+
+      
+            FillSpecifications(product, model);
+
+            return model;
+        }
+        private void FillSpecifications(Product product, ProductDetailsViewModel model)
+        {
+            
+            var specs = product switch
+            {
+                Cpu cpu => new Dictionary<string, string>
+                {
+                    ["Сокет"] = cpu.Socket,
+                    ["Ядра (Physical)"] = cpu.PhysicalCores.ToString(),
+                    ["Нишки (Logical)"] = cpu.LogicalCores.ToString(),
+                    ["Честота"] = $"{cpu.BaseFrequencyGhz} GHz",
+                    ["Turbo Boost"] = $"{cpu.TurboFrequencyGhz} GHz",
+                    ["Кеш"] = cpu.Cache,
+                    ["Охладител"] = cpu.HasBoxCooler ? "Да" : "Не"
+                },
+
+                Gpu gpu => new Dictionary<string, string>
+                {
+                    ["Памет"] = $"{gpu.MemorySizeGb} GB",
+                    ["Тип памет"] = gpu.MemoryType,
+                    ["Шина"] = $"{gpu.BusWidthBit} bit",
+                    ["Честота"] = $"{gpu.FrequencyMhz} MHz"
+                },
+
+                Ram ram => new Dictionary<string, string>
+                {
+                    ["Капацитет"] = $"{ram.CapacityGb} GB",
+                    ["Тип"] = ram.Type,
+                    ["Скорост"] = $"{ram.SpeedMt} MT/s",
+                    ["Тайминг"] = ram.Timing,
+                    ["RGB"] = ram.HasRgb ? "Да" : "Не",
+                    ["Kit"] = ram.IsKit ? "Да (2x)" : "Не (1x)"
+                },
+
+                Motherboard mb => new Dictionary<string, string>
+                {
+                    ["Сокет"] = mb.Socket,
+                    ["Чипсет"] = mb.Chipset,
+                    ["Форм-фактор"] = mb.FormFactor,
+                    ["Слотове за памет"] = mb.MemorySlots.ToString(),
+                    ["Wi-Fi"] = mb.HasWifi ? "Да" : "Не"
+                },
+
+                StorageDrive drive => new Dictionary<string, string>
+                {
+                    ["Тип"] = drive.Type,
+                    ["Капацитет"] = $"{drive.CapacityGb} GB",
+                    ["Интерфейс"] = drive.Interface,
+                    ["Четене"] = $"{drive.ReadSpeedMb} MB/s",
+                    ["Писане"] = $"{drive.WriteSpeedMb} MB/s"
+                },
+
+                Display display => new Dictionary<string, string>
+                {
+                    ["Размер"] = $"{display.ScreenSizeInch} инча",
+                    ["Резолюция"] = display.Resolution,
+                    ["Опресняване"] = $"{display.RefreshRateHz} Hz",
+                    ["Панел"] = display.PanelType,
+                    ["Време за реакция"] = $"{display.ResponseTimeMs} ms"
+                },
+
+                Case pcCase => new Dictionary<string, string>
+                {
+                    ["Форм-фактор"] = pcCase.FormFactor,
+                    ["Цвят"] = pcCase.Color,
+                    ["Mesh преден панел"] = pcCase.HasMeshFront ? "Да" : "Не",
+                    ["Размери"] = $"{pcCase.LengthMm}x{pcCase.WidthMm}x{pcCase.HeightMm} mm"
+                },
+
+                PowerSupply psu => new Dictionary<string, string>
+                {
+                    ["Мощност"] = $"{psu.PowerWatts} W",
+                    ["Сертификат"] = psu.Certification,
+                    ["Модулно"] = psu.IsModular ? "Да" : "Не"
+                },
+
+                Keyboard kb => new Dictionary<string, string>
+                {
+                    ["Тип суичове"] = kb.SwitchType,
+                    ["Подредба (Layout)"] = kb.Layout,
+                    ["Размер"] = $"{kb.SizePercentage}%",
+                    ["Свързване"] = kb.ConnectionType,
+                    ["RGB осветление"] = kb.HasRgb ? "Да" : "Не"
+                },
+
+                Mouse mouse => new Dictionary<string, string>
+                {
+                    ["DPI (Чувствителност)"] = mouse.Dpi.ToString(),
+                    ["Сензор"] = mouse.SensorType,
+                    ["Брой бутони"] = mouse.ButtonsCount.ToString(),
+                    ["Свързване"] = mouse.ConnectionType,
+                    ["Тегло"] = $"{mouse.WeightGrams} гр.",
+                    ["Цвят"] = mouse.Color
+                },
+
+
+               
+                _ => new Dictionary<string, string>()
+            };
+
+           
+            foreach (var kvp in specs)
+            {
+                model.Specifications.Add(kvp.Key, kvp.Value);
+            }
         }
     }
 }

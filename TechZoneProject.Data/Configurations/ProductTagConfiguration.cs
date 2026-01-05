@@ -8,7 +8,6 @@ namespace TechZoneProject.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductTag> builder)
         {
-            // Композитен ключ
             builder.HasKey(pt => new { pt.ProductId, pt.TagId });
 
             builder.HasQueryFilter(pt => !pt.Product.IsDeleted);

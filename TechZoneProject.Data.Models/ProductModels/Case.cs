@@ -3,8 +3,8 @@
     public class Case : Product
     {
         public int WarrantyMonths { get; set; }
-        public string FormFactor { get; set; } = null!; // Mid Tower
-        public string SupportedFormats { get; set; } = null!; // ATX, mATX
+        public string FormFactor { get; set; } = null!; 
+        public string SupportedFormats { get; set; } = null!; 
         public bool HasMeshFront { get; set; }
         public string Color { get; set; } = null!;
         public double LengthMm { get; set; }

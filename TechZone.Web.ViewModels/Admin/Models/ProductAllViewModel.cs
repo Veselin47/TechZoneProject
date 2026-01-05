@@ -15,7 +15,7 @@ namespace TechZone.Web.ViewModels.Admin.Models
         public int StockQuantity { get; set; }
         public string Brand { get; set; } = null!;
 
-        public string ProductType { get; set; } = null!; // "Cpu", "Gpu", "Mouse"...
+        public string ProductType { get; set; } = null!; 
         public bool IsAvailable { get; set; }
     }
 }

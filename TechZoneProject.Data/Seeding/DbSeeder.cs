@@ -9,13 +9,11 @@ namespace TechZoneProject.Data.Seeding
         {
             using (var context = serviceProvider.GetRequiredService<ApplicationDbContext>())
             {
-                // 1. Проверка дали има продукти
                 if (context.Products.Any())
                 {
                     return;
                 }
 
-                // 2. Създаване на Марки (Само с Name, както е в твоя модел)
                 var brandAsus = new Brand { Name = "ASUS" };
                 var brandIntel = new Brand { Name = "Intel" };
                 var brandNvidia = new Brand { Name = "NVIDIA" };
@@ -25,12 +23,9 @@ namespace TechZoneProject.Data.Seeding
                 context.Brands.AddRange(brandAsus, brandIntel, brandNvidia, brandSamsung, brandKingston);
                 context.SaveChanges();
 
-                // 3. Създаване на Продукти
 
-                // --- CPU (Процесор) ---
                 var cpu = new Cpu
                 {
-                    // Базови свойства (от Product)
                     Name = "Intel Core i9-14900K",
                     Description = "Най-мощният процесор за гейминг.",
                     Price = 1350.00m,
@@ -39,10 +34,9 @@ namespace TechZoneProject.Data.Seeding
                     StockQuantity = 10,
                     IsDeleted = false,
 
-                    // Специфични свойства (твоят модел)
                     WarrantyMonths = 36,
                     Socket = "LGA1700",
-                    PhysicalCores = 24,       // 8 P-cores + 16 E-cores
+                    PhysicalCores = 24,       
                     LogicalCores = 32,
                     BaseFrequencyGhz = 3.2,
                     TurboFrequencyGhz = 6.0,
@@ -51,7 +45,6 @@ namespace TechZoneProject.Data.Seeding
                     HasBoxCooler = false
                 };
 
-                // --- GPU (Видео карта) ---
                 var gpu = new Gpu
                 {
                     Name = "ASUS ROG Strix RTX 4090",
@@ -62,7 +55,6 @@ namespace TechZoneProject.Data.Seeding
                     StockQuantity = 3,
                     IsDeleted = false,
 
-                    // Специфични свойства
                     WarrantyMonths = 36,
                     MemorySizeGb = 24,
                     MemoryType = "GDDR6X",
@@ -72,7 +64,6 @@ namespace TechZoneProject.Data.Seeding
                     Connectors = "HDMI 2.1, 3x DP 1.4a"
                 };
 
-                // --- DISPLAY (Монитор) ---
                 var monitor = new Display
                 {
                     Name = "Samsung Odyssey G9",
@@ -83,7 +74,6 @@ namespace TechZoneProject.Data.Seeding
                     StockQuantity = 5,
                     IsDeleted = false,
 
-                    // Специфични свойства
                     WarrantyMonths = 24,
                     ScreenSizeInch = 49,
                     Resolution = "5120x1440",
@@ -94,7 +84,6 @@ namespace TechZoneProject.Data.Seeding
                     Ports = "HDMI, DP, USB Hub"
                 };
 
-                // --- RAM (Памет) ---
                 var ram = new Ram
                 {
                     Name = "Kingston FURY Beast 32GB Kit",
@@ -105,11 +94,10 @@ namespace TechZoneProject.Data.Seeding
                     StockQuantity = 50,
                     IsDeleted = false,
 
-                    // Специфични свойства
-                    WarrantyMonths = 99, // Lifetime
+                    WarrantyMonths = 99, 
                     CapacityGb = 32,
                     Type = "DDR5",
-                    SpeedMt = 6000,      // MT/s
+                    SpeedMt = 6000,     
                     Timing = "CL40",
                     IsKit = true,
                     HasRgb = true,

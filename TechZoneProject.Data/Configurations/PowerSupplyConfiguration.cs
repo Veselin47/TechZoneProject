@@ -10,7 +10,7 @@ namespace TechZoneProject.Data.Configurations
         {
             builder.ToTable("PowerSupplies");
 
-            builder.Property(ps => ps.Certification).HasMaxLength(30); // 80+ Gold
+            builder.Property(ps => ps.Certification).HasMaxLength(30);
             builder.Property(ps => ps.FormFactor).HasMaxLength(20);
             builder.Property(ps => ps.Standard).HasMaxLength(20);
         }

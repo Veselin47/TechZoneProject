@@ -13,20 +13,17 @@ namespace TechZone.Web.Controllers
             this.productService = productService;
         }
 
-        // 1. Страница с плочки "ХАРДУЕР"
         public IActionResult Index()
         {
             return View();
         }
 
-        // 2. Страница с плочки "ПЕРИФЕРИЯ"
         public IActionResult Peripherals()
         {
             return View();
         }
 
-        // 3. Списък с продукти + Филтри
-        // URL пример: /Shop/Category/cpu?brand=Intel&minPrice=500
+    
         [HttpGet]
         public async Task<IActionResult> Category(string id, [FromQuery] ProductSearchQueryModel query)
         {
@@ -35,17 +32,16 @@ namespace TechZone.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Викаме умния сървис с филтрите
+            
             var viewModel = await this.productService.GetFilteredProductsAsync(id, query);
 
-            // Слагаме хубаво заглавие на Български
+           
             ViewData["CategoryName"] = GetCategoryTitle(id);
-            ViewData["CategoryId"] = id; // Трябва ни за формата във View-то
+            ViewData["CategoryId"] = id; 
 
             return View(viewModel);
         }
 
-        // Помощен метод за превод на заглавията
         private string GetCategoryTitle(string categoryId)
         {
             return categoryId.ToLower() switch
@@ -61,6 +57,18 @@ namespace TechZone.Web.Controllers
                 "headset" => "Слушалки",
                 _ => "Продукти"
             };
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = await productService.GetProductDetailsAsync(id);
+
+            if (model == null)
+            {
+                return NotFound(); 
+            }
+
+            return View(model);
         }
     }
 }
